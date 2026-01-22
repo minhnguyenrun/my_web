@@ -1,6 +1,6 @@
 const express = require("express");
-const pool = require("./db");
 const path = require("path");
+const pool = require("./db");
 
 const app = express();
 app.use(express.json());
@@ -12,14 +12,14 @@ app.get("/", (req, res) => {
 
 // API
 app.get("/api/users", async (req, res) => {
-  const [rows] = await pool.query("SELECT id, email FROM users");
-  res.json(rows);
+  const result = await pool.query("SELECT id, email FROM users");
+  res.json(result.rows);
 });
 
 app.post("/api/users", async (req, res) => {
   const { email, password } = req.body;
   await pool.query(
-    "INSERT INTO users (email, password) VALUES (?, ?)",
+    "INSERT INTO users (email, password) VALUES ($1, $2)",
     [email, password]
   );
   res.json({ success: true });
