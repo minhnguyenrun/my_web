@@ -1,0 +1,32 @@
+<h1 id="title"></h1>
+<div id="content"></div>
+
+<h3>Đăng ký học bổng</h3>
+<input id="name" placeholder="Họ tên">
+<input id="email" placeholder="Email">
+<textarea id="note" placeholder="Ghi chú"></textarea>
+<button onclick="apply()">Gửi</button>
+
+<script>
+const id = new URLSearchParams(location.search).get("id");
+
+fetch(`/api/scholarships/${id}`)
+  .then(r => r.json())
+  .then(s => {
+    document.getElementById("title").innerText = s.title;
+    document.getElementById("content").innerText = s.content;
+  });
+
+function apply() {
+  fetch("/api/apply", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      scholarship_id: id,
+      full_name: name.value,
+      email: email.value,
+      note: note.value
+    })
+  }).then(() => alert("Đã gửi đăng ký"));
+}
+</script>

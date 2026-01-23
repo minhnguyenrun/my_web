@@ -1,0 +1,21 @@
+<h1>Admin - Add Scholarship</h1>
+<input id="title" placeholder="Title">
+<textarea id="summary" placeholder="Summary"></textarea>
+<textarea id="content" placeholder="Content"></textarea>
+<input id="deadline" type="date">
+<button onclick="add()">Post</button>
+
+<script>
+function add() {
+  fetch("/api/admin/scholarships", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      title: title.value,
+      summary: summary.value,
+      content: content.value,
+      deadline: deadline.value
+    })
+  }).then(() => alert("Posted"));
+}
+</script>
