@@ -1,38 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>First Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Học Bổng</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #f8f9fa;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background-color: #e9ecef;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .scholarship {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s;
+    }
+    .scholarship:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .scholarship h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .scholarship h3 a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .scholarship h3 a:hover {
+      text-decoration: underline;
+    }
+    .scholarship p {
+      margin: 10px 0;
+    }
+    .scholarship small {
+      color: #6c757d;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>User list</h1>
+  <header>
+    <nav>
+      <a href="/index.html">Trang Chủ</a>
+      <a href="/admin.html">Quản Lý</a>
+      <a href="/about.html">Về Chúng Tôi</a>
+      <a href="/profiles.html">Hồ Sơ Học Bổng</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>Danh Sách Học Bổng</h2>
+    <div id="list"></div>
+  </div>
 
-  <input id="name" placeholder="Enter name">
-  <button onclick="addUser()">Add</button>
-
-  <ul id="list"></ul>
-
-<script>
-const API = "/api/users"; // relative
-
-async function load() {
-  const res = await fetch(API);
-  const data = await res.json();
-  document.getElementById("list").innerHTML =
-    data.map(u => `<li>${u.name}</li>`).join("");
-}
-
-async function addUser() {
-  const name = document.getElementById("name").value;
-  await fetch(API, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({name})
-  });
-  load();
-}
-
-load();
-</script>
+  <script>
+    fetch("/api/scholarships")
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("list").innerHTML =
+          data.map(s => {
+            let description = s.summary || "";
+            if (s.sections && s.sections.length > 0) {
+              const firstSection = s.sections[0];
+              if (firstSection.type === 'text') {
+                description = firstSection.content.substring(0, 200) + (firstSection.content.length > 200 ? '...' : '');
+              } else {
+                description = '[Hình ảnh]';
+              }
+            }
+            return `<div class="scholarship">
+              <h3><a href="/detail/${s.id}">${s.title}</a></h3>
+              <p>${description}</p>
+              <small>Deadline: ${s.deadline || "N/A"}</small>
+              <br><br>
+              <a href="/detail/${s.id}" class="btn">Xem Chi Tiết</a>
+            </div>`;
+          }).join("");
+      });
+  </script>
 </body>
 </html>

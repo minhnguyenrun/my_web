@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chỉnh Sửa Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #f8f9fa;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background-color: #e9ecef;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .section {
+      border: 1px solid #dee2e6;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background-color: #f8f9fa;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+    }
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+    .btn-success {
+      background-color: #28a745;
+    }
+    .btn-success:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Trang Chủ</a>
+      <a href="admin.html">Quản Lý</a>
+    </nav>
+    <h1>Chỉnh Sửa Form Đăng Ký</h1>
+  </header>
+  <div class="container">
+    <h3>Các Trường</h3>
+    <div id="fields">
+      <!-- Fields will be loaded -->
+    </div>
+    <button type="button" class="btn" onclick="addField()">Thêm Trường</button>
+    <br><br>
+    <button class="btn btn-success" onclick="saveForm()">Lưu Form</button>
+    <button class="btn" onclick="goBack()">Quay Lại</button>
+  </div>
+
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+
+    fetch(`/api/scholarships/${id}`)
+      .then(r => r.json())
+      .then(s => {
+        try {
+          const fields = JSON.parse(s.form || '[]');
+          fields.forEach(field => addFieldElement(field.question, field.type));
+        } catch (e) {
+          // No fields
+        }
+      });
+
+    function addFieldElement(question = '', type = 'text') {
+      const div = document.createElement('div');
+      div.className = 'section';
+      div.innerHTML = `
+        <input type="text" placeholder="Câu hỏi" value="${question}" class="field-question">
+        <select class="field-type">
+          <option value="text" ${type === 'text' ? 'selected' : ''}>Text</option>
+          <option value="email" ${type === 'email' ? 'selected' : ''}>Email</option>
+          <option value="textarea" ${type === 'textarea' ? 'selected' : ''}>Textarea</option>
+        </select>
+        <button type="button" class="btn btn-danger" onclick="removeField(this)">Xóa Trường</button>
+      `;
+      document.getElementById('fields').appendChild(div);
+    }
+
+    function addField() {
+      addFieldElement();
+    }
+
+    function removeField(btn) {
+      btn.parentElement.remove();
+    }
+
+    function saveForm() {
+      const fields = Array.from(document.querySelectorAll('#fields .section')).map(f => ({
+        question: f.querySelector('.field-question').value,
+        type: f.querySelector('.field-type').value
+      }));
+
+      fetch(`/api/admin/scholarships/${id}/form`, {
+        method: "PUT",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ form: JSON.stringify(fields) })
+      }).then(r => r.json()).then(() => {
+        alert("Đã lưu form");
+        goBack();
+      }).catch(() => alert("Lỗi"));
+    }
+
+    function goBack() {
+      window.location.href = `/detail/${id}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,32 +1,253 @@
-<h1 id="title"></h1>
-<div id="content"></div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Học Bổng</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #f8f9fa;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #495057;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background-color: #e9ecef;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .section {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      margin-top: 0;
+      color: #495057;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #218838;
+    }
+    .back-btn {
+      background-color: #6c757d;
+      margin-bottom: 20px;
+    }
+    .back-btn:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Trang Chủ</a>
+      <a href="admin.html">Quản Lý</a>
+    </nav>
+    <h1 id="title"></h1>
+  </header>
+  <div class="container">
+    <button class="btn back-btn" onclick="history.back()">Quay Lại</button>
+    <div id="content"></div>
+    <div id="actions">
+      <button id="fill-form-btn" class="btn" style="display: none;">Điền Form Đăng Ký</button>
+      <button id="edit-form-btn" class="btn" style="display: none;">Tạo/Edit Form</button>
+    </div>
+    <div id="application-form" style="display: none;">
+      <h2>Đăng Ký Học Bổng</h2>
+      <div id="form-fields"></div>
+      <button class="btn" onclick="apply()">Gửi Đăng Ký</button>
+    </div>
+    <div id="admin-section" style="display: none;">
+      <h2>Quản Lý Đơn Đăng Ký</h2>
+      <button class="btn" onclick="exportExcel()">Xuất Excel</button>
+      <div id="applications-list"></div>
+    </div>
 
-<h3>Đăng ký học bổng</h3>
-<input id="name" placeholder="Họ tên">
-<input id="email" placeholder="Email">
-<textarea id="note" placeholder="Ghi chú"></textarea>
-<button onclick="apply()">Gửi</button>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    let scholarshipData;
 
-<script>
-const id = new URLSearchParams(location.search).get("id");
+    if (!id) {
+      alert("ID học bổng không hợp lệ");
+      return;
+    }
 
-fetch(`/api/scholarships/${id}`)
-  .then(r => r.json())
-  .then(s => {
-    document.getElementById("title").innerText = s.title;
-    document.getElementById("content").innerText = s.content;
-  });
+    fetch(`/api/scholarships/${id}`)
+      .then(r => {
+        if (!r.ok) throw new Error('API error: ' + r.status);
+        return r.json();
+      })
+      .then(s => {
+        console.log('Scholarship data:', s);
+        if (!s) {
+          alert("Không tìm thấy học bổng");
+          return;
+        }
+        scholarshipData = s;
+        document.getElementById("title").innerText = s.title || "Không có tiêu đề";
 
-function apply() {
-  fetch("/api/apply", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      scholarship_id: id,
-      full_name: name.value,
-      email: email.value,
-      note: note.value
-    })
-  }).then(() => alert("Đã gửi đăng ký"));
-}
-</script>
+        // Render content as sections
+        let contentHtml = '';
+        try {
+          const sections = JSON.parse(s.content || '[]');
+          if (sections.length === 0) {
+            contentHtml = '<div class="section"><p>Chưa có nội dung</p></div>';
+          } else {
+            sections.forEach(section => {
+              contentHtml += `<div class="section">
+                <h2>${section.title || 'Mục'}</h2>
+                <p>${section.text || ''}</p>
+              </div>`;
+            });
+          }
+        } catch (e) {
+          console.error('Parse content error:', e);
+          contentHtml = `<div class="section"><p>${s.content || 'Chưa có nội dung'}</p></div>`;
+        }
+        document.getElementById("content").innerHTML = contentHtml;
+
+        // Render form fields
+        let formHtml = '';
+        try {
+          const fields = JSON.parse(s.form || '[]');
+          if (fields.length === 0) {
+            formHtml = '<p>Chưa có form đăng ký</p>';
+          } else {
+            fields.forEach(field => {
+              formHtml += `<div class="form-group">
+                <label>${field.question}</label>
+                <input type="${field.type || 'text'}" id="field-${field.question.replace(/\s+/g, '-').toLowerCase()}">
+              </div>`;
+            });
+          }
+        } catch (e) {
+          console.error('Parse form error:', e);
+          formHtml = `<div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" id="full_name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email">
+          </div>
+          <div class="form-group">
+            <label>Ghi chú</label>
+            <textarea id="note"></textarea>
+          </div>`;
+        }
+        document.getElementById("form-fields").innerHTML = formHtml;
+
+        // Show buttons
+        const isLoggedIn = localStorage.getItem('loggedin') === 'true';
+        if (isLoggedIn) {
+          document.getElementById('edit-form-btn').style.display = 'inline-block';
+          document.getElementById('admin-section').style.display = 'block';
+          loadApplications();
+        }
+        if (s.form && s.form !== '[]') {
+          document.getElementById('fill-form-btn').style.display = 'inline-block';
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+        alert('Lỗi tải dữ liệu: ' + err.message);
+      });
+
+    document.getElementById('fill-form-btn').addEventListener('click', () => {
+      document.getElementById('application-form').style.display = 'block';
+    });
+
+    document.getElementById('edit-form-btn').addEventListener('click', () => {
+      // Redirect to form editor, or open modal
+      window.location.href = `form-editor.html?id=${id}`;
+    });
+
+    function loadApplications() {
+      fetch(`/api/scholarships/${id}/applications`)
+        .then(r => r.json())
+        .then(data => {
+          const list = data.map(app => `<div class="section"><pre>${JSON.stringify(app.data, null, 2)}</pre><small>${app.created_at}</small></div>`).join('');
+          document.getElementById('applications-list').innerHTML = list;
+        });
+    }
+
+    function exportExcel() {
+      window.open(`/api/scholarships/${id}/export`, '_blank');
+    }
+
+    function apply() {
+      const data = { scholarship_id: id };
+      const fields = document.querySelectorAll('#form-fields input, #form-fields textarea');
+      fields.forEach(field => {
+        data[field.id.replace('field-', '').replace(/-/g, '_')] = field.value;
+      });
+
+      fetch("/api/apply", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(data)
+      }).then(r => r.json()).then(() => alert("Đã gửi đăng ký")).catch(() => alert("Lỗi khi gửi"));
+    }
+  </script>
+</body>
+</html>
