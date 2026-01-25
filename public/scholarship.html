@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Scholar Share - Tạo Học Bổng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #1a2533; 
+      --dropdown-bg: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #333;
+    }
+
+    /* Top Bar */
+    .top-header {
+      background-color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      color: white;
+      font-size: 14px;
+      position: relative;
+      z-index: 1000;
+    }
+
+    #current-page-name {
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-label {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: var(--dropdown-bg);
+      min-width: 240px;
+      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+      padding: 10px 0;
+      margin-top: 15px;
+    }
+
+    .dropdown-content a {
+      color: #bbbbbb;
+      padding: 15px 25px;
+      text-decoration: none;
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #2a2a2a;
+      color: white;
+      padding-left: 30px;
+    }
+
+    .show { display: block; }
+
+    /* Hero Section */
+    .hero-section {
+      background-color: var(--primary-dark);
+      height: 280px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo-box {
+      border: 3px solid white;
+      padding: 20px 60px;
+    }
+
+    .logo-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 50px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* Nội dung chính */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .section {
+      border: 1px solid #dee2e6;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background-color: #f8f9fa;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #218838;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+    }
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .image-scale-modal .modal-content {
+      max-width: 600px;
+      text-align: left;
+    }
+    .image-scale-modal canvas {
+      max-width: 100%;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+    }
+    .scale-controls {
+      margin: 15px 0;
+    }
+    .scale-controls label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .scale-controls input[type="range"] {
+      width: 100%;
+    }
+    .scale-info {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #666;
+    }
+    #edit-buttons {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="top-header">
+      <span id="current-page-name">TẠO HỌC BỔNG</span>
+      
+      <div class="dropdown">
+        <div class="dropdown-label" onclick="toggleMenu()">
+          Trang chủ <span style="font-size: 10px;">▼</span>
+        </div>
+        <div class="dropdown-content" id="myDropdown">
+          <a href="/index.html">Trang Chủ</a>
+          <a href="/about.html">Về Chúng Tôi</a>
+          <a href="/admin.html">Quản Lý</a>
+          <a href="/profiles.html">Hồ Sơ Học Bổng</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <div class="logo-box">
+        <h1>SCHOLAR SHARE</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <form id="scholarship-form">
+      <div class="form-group">
+        <label for="title">Tiêu đề học bổng</label>
+        <input type="text" id="title" required>
+      </div>
+      <div class="form-group">
+        <label for="summary">Tóm tắt</label>
+        <textarea id="summary" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="deadline">Deadline</label>
+        <input type="date" id="deadline">
+      </div>
+      <div class="form-group">
+        <label for="image">Hình ảnh đại diện</label>
+        <input type="file" id="image" accept="image/*" onchange="uploadMainImage(this)">
+        <div id="image-preview"></div>
+      </div>
+      <h3>Nội dung chi tiết</h3>
+      <div id="sections">
+        <!-- Sections will be loaded -->
+      </div>
+      <button type="button" class="btn btn-secondary" onclick="addSection()">Thêm Phần</button>
+      <br><br>
+      <button type="submit" class="btn" id="submit-btn">Lưu</button>
+      <div id="edit-buttons">
+        <button type="button" class="btn btn-secondary" onclick="createNewForm()">Tạo Form Mới</button>
+        <button type="button" class="btn btn-secondary" onclick="viewApplications()">Xem Danh Sách Đăng Ký</button>
+        <button type="button" class="btn btn-danger" onclick="deleteScholarship()">Xóa Học Bổng</button>
+      </div>
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='/admin.html'">Quay Lại</button>
+    </form>
+  </div>
+
+  <div id="add-section-modal" class="modal">
+    <div class="modal-content">
+      <h3>Chọn loại phần muốn thêm</h3>
+      <button class="btn" onclick="chooseSectionType('text')">Thêm Text</button>
+      <button class="btn btn-secondary" onclick="chooseSectionType('image')">Thêm Hình Ảnh</button>
+      <br><br>
+      <button class="btn btn-danger" onclick="closeModal()">Hủy</button>
+    </div>
+  </div>
+
+  <div id="image-scale-modal" class="modal image-scale-modal">
+    <div class="modal-content">
+      <h3>Điều chỉnh kích thước ảnh</h3>
+      <canvas id="image-canvas"></canvas>
+      <div class="scale-controls">
+        <label for="scale-slider">Kích thước: <span id="scale-value">100</span>%</label>
+        <input type="range" id="scale-slider" min="10" max="200" value="100" step="5">
+      </div>
+      <div class="scale-info">
+        Kích thước gốc: <span id="original-size"></span> | 
+        Kích thước mới: <span id="new-size"></span>
+      </div>
+      <br>
+      <button class="btn" onclick="applyImageScale()">Áp dụng</button>
+      <button class="btn btn-danger" onclick="cancelImageScale()">Hủy</button>
+    </div>
+  </div>
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    let quills = [];
+    let isEditMode = false;
+    let scholarshipId = null;
+    let currentImageFile = null;
+    let currentImageInput = null;
+    let originalImage = null;
+    let canvas = null;
+    let ctx = null;
+
+    function createQuill(element) {
+      const quill = new Quill(element, {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ 'size': ['small', false, 'large', 'huge'] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link', 'image'],
+            ['clean']
+          ]
+        },
+        placeholder: 'Nội dung phần...'
+      });
+      quills.push(quill);
+      return quill;
+    }
+
+    // Check if we're editing or creating
+    const urlParams = new URLSearchParams(location.search);
+    scholarshipId = urlParams.get("id");
+
+    if (scholarshipId) {
+      isEditMode = true;
+      document.title = 'Scholar Share - Chỉnh Sửa Học Bổng';
+      document.getElementById('current-page-name').textContent = 'CHỈNH SỬA HỌC BỔNG';
+      document.getElementById('submit-btn').textContent = 'Lưu Thay Đổi';
+      document.getElementById('edit-buttons').style.display = 'inline-block';
+
+      // Load existing data
+      fetch(`/api/scholarships/${scholarshipId}`)
+        .then(r => r.json())
+        .then(s => {
+          if (!s) {
+            alert("Không tìm thấy học bổng");
+            window.location.href = '/admin.html';
+            return;
+          }
+          document.getElementById('title').value = s.title || '';
+          document.getElementById('summary').value = s.summary || '';
+          document.getElementById('deadline').value = s.deadline || '';
+          if (s.image) {
+            document.getElementById('image-preview').innerHTML = `<img src="${s.image}" style="max-width:200px;">`;
+          }
+
+          // Load sections
+          if (s.sections && s.sections.length > 0) {
+            s.sections.forEach(section => {
+              addSectionElement(section.type || 'text', section.content);
+            });
+          } else {
+            addSectionElement('text', '');
+          }
+        });
+    } else {
+      // Create mode
+      document.title = 'Scholar Share - Tạo Học Bổng Mới';
+      document.getElementById('current-page-name').textContent = 'TẠO HỌC BỔNG';
+      document.getElementById('submit-btn').textContent = 'Tạo Học Bổng';
+      addSectionElement('text', '');
+    }
+
+    function addSectionElement(type = 'text', content = '') {
+      const div = document.createElement('div');
+      div.className = 'section';
+      if (type === 'image') {
+        div.innerHTML = `
+          <input type="file" class="section-file" accept="image/*" onchange="uploadImage(this)">
+          <div class="image-preview">${content ? `<img src="${content}" style="max-width:100%;">` : ''}</div>
+          <button type="button" class="btn btn-secondary" onclick="removeSection(this)">Xóa Phần</button>
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="quill-container" style="height: 200px;"></div>
+          <button type="button" class="btn btn-secondary" onclick="removeSection(this)">Xóa Phần</button>
+        `;
+        // Create Quill after adding to DOM
+        setTimeout(() => {
+          const container = div.querySelector('.quill-container');
+          const quill = createQuill(container);
+          quill.root.innerHTML = content;
+        }, 0);
+      }
+      document.getElementById('sections').appendChild(div);
+    }
+
+    function addSection() {
+      document.getElementById('add-section-modal').style.display = 'block';
+    }
+
+    function chooseSectionType(type) {
+      addSectionElement(type, '');
+      closeModal();
+    }
+
+    function closeModal() {
+      document.getElementById('add-section-modal').style.display = 'none';
+      closeImageScaleModal();
+    }
+
+    function removeSection(btn) {
+      btn.parentElement.remove();
+    }
+
+    function uploadImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+      showImageScaleModal(file, input);
+    }
+
+    function uploadMainImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+      showImageScaleModal(file, input);
+    }
+
+    function showImageScaleModal(file, input) {
+      currentImageFile = file;
+      currentImageInput = input;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        originalImage = new Image();
+        originalImage.onload = function() {
+          canvas = document.getElementById('image-canvas');
+          ctx = canvas.getContext('2d');
+          
+          // Set canvas size to fit modal
+          const maxWidth = 500;
+          const maxHeight = 400;
+          let { width, height } = fitImageToCanvas(originalImage.width, originalImage.height, maxWidth, maxHeight);
+          
+          canvas.width = width;
+          canvas.height = height;
+          
+          // Draw original image
+          ctx.drawImage(originalImage, 0, 0, width, height);
+          
+          // Update info
+          document.getElementById('original-size').textContent = `${originalImage.width} x ${originalImage.height}`;
+          document.getElementById('new-size').textContent = `${width} x ${height}`;
+          
+          // Setup slider
+          const slider = document.getElementById('scale-slider');
+          slider.value = 100;
+          document.getElementById('scale-value').textContent = '100';
+          
+          slider.oninput = function() {
+            const scale = this.value / 100;
+            const newWidth = Math.round(originalImage.width * scale);
+            const newHeight = Math.round(originalImage.height * scale);
+            
+            // Fit to canvas
+            let { width: canvasWidth, height: canvasHeight } = fitImageToCanvas(newWidth, newHeight, maxWidth, maxHeight);
+            
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            
+            ctx.drawImage(originalImage, 0, 0, canvasWidth, canvasHeight);
+            document.getElementById('scale-value').textContent = this.value;
+            document.getElementById('new-size').textContent = `${newWidth} x ${newHeight}`;
+          };
+          
+          document.getElementById('image-scale-modal').style.display = 'block';
+        };
+        originalImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function fitImageToCanvas(imgWidth, imgHeight, maxWidth, maxHeight) {
+      const ratio = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
+      return {
+        width: Math.round(imgWidth * ratio),
+        height: Math.round(imgHeight * ratio)
+      };
+    }
+
+    function applyImageScale() {
+      if (!canvas) return;
+      
+      // Get scaled image as blob
+      canvas.toBlob(function(blob) {
+        const scaledFile = new File([blob], currentImageFile.name, { type: currentImageFile.type });
+        
+        // Upload the scaled image
+        const formData = new FormData();
+        formData.append('image', scaledFile);
+        
+        fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        }).then(r => r.json()).then(data => {
+          if (data.url) {
+            const preview = currentImageInput.parentElement.querySelector('.image-preview');
+            if (preview) {
+              preview.innerHTML = `<img src="${data.url}" style="max-width:100%;">`;
+            }
+            currentImageInput.dataset.url = data.url;
+            closeImageScaleModal();
+          }
+        });
+      }, currentImageFile.type);
+    }
+
+    function cancelImageScale() {
+      closeImageScaleModal();
+    }
+
+    function closeImageScaleModal() {
+      document.getElementById('image-scale-modal').style.display = 'none';
+      currentImageFile = null;
+      currentImageInput = null;
+      originalImage = null;
+      canvas = null;
+      ctx = null;
+    }
+
+    document.getElementById('scholarship-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const sections = Array.from(document.querySelectorAll('#sections .section')).map(s => {
+        const quillContainer = s.querySelector('.quill-container');
+        if (quillContainer) {
+          const quill = quills.find(q => q.container === quillContainer);
+          return { type: 'text', content: quill ? quill.root.innerHTML : '' };
+        } else {
+          const fileEl = s.querySelector('.section-file');
+          return { type: 'image', content: fileEl.dataset.url || '' };
+        }
+      });
+
+      const requestData = {
+        title: document.getElementById('title').value,
+        summary: document.getElementById('summary').value,
+        sections: sections,
+        deadline: document.getElementById('deadline').value,
+        image: document.getElementById('image').dataset.url || ''
+      };
+
+      if (isEditMode) {
+        // Update existing scholarship
+        fetch(`/api/admin/scholarships/${scholarshipId}`, {
+          method: "PUT",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(requestData)
+        }).then(r => r.json()).then(() => {
+          alert("Đã lưu thay đổi");
+          window.location.href = `/detail/${scholarshipId}`;
+        }).catch(() => alert("Lỗi"));
+      } else {
+        // Create new scholarship
+        fetch('/api/admin/scholarships', {
+          method: 'POST',
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(requestData)
+        }).then(r => r.json()).then(data => {
+          if (data.id) {
+            alert("Đã tạo học bổng");
+            window.location.href = `/detail/${data.id}`;
+          } else {
+            alert("Lỗi: " + (data.error || "Unknown"));
+          }
+        }).catch(() => alert("Lỗi"));
+      }
+    });
+
+    function deleteScholarship() {
+      if (confirm("Bạn có chắc muốn xóa học bổng này?")) {
+        fetch(`/api/admin/scholarships/${scholarshipId}`, {
+          method: "DELETE"
+        }).then(() => {
+          alert("Đã xóa học bổng");
+          window.location.href = '/admin.html';
+        }).catch(() => alert("Lỗi"));
+      }
+    }
+
+    function createNewForm() {
+      window.location.href = '/form-editor.html?id=' + encodeURIComponent(scholarshipId);
+    }
+
+    function viewApplications() {
+      window.location.href = '/applications/' + encodeURIComponent(scholarshipId);
+    }
+
+    function toggleMenu() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropdown-label')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          if (dropdowns[i].classList.contains('show')) {
+            dropdowns[i].classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

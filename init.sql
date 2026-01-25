@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS scholarships (
   content TEXT,
   form TEXT,
   deadline TEXT,
+  image TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

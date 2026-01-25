@@ -3,48 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Về Chúng Tôi</title>
+  <title>Scholar Share - Về Chúng Tôi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-dark: #1a2533; 
+      --dropdown-bg: #1e1e1e;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #ffffff;
-      color: #333;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      background-color: #ffffff;
+      color: #333;
     }
-    header {
-      background-color: #f8f9fa;
-      padding: 10px 20px;
-      border-bottom: 1px solid #e9ecef;
+
+    /* Top Bar */
+    .top-header {
+      background-color: var(--primary-dark);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 40px;
+      color: white;
+      font-size: 14px;
+      position: relative;
+      z-index: 1000;
     }
-    header h1 {
-      margin: 0;
-      color: #495057;
+
+    #current-page-name {
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    nav {
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-label {
+      font-weight: 600;
       display: flex;
-      gap: 20px;
+      align-items: center;
+      gap: 8px;
     }
-    nav a {
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: var(--dropdown-bg);
+      min-width: 240px;
+      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+      padding: 10px 0;
+      margin-top: 15px;
+    }
+
+    .dropdown-content a {
+      color: #bbbbbb;
+      padding: 15px 25px;
       text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
     }
-    nav a:hover {
-      background-color: #e9ecef;
+
+    .dropdown-content a:hover {
+      background-color: #2a2a2a;
+      color: white;
+      padding-left: 30px;
     }
+
+    .show { display: block; }
+
+    /* Hero Section */
+    .hero-section {
+      background-color: var(--primary-dark);
+      height: 280px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo-box {
+      border: 3px solid white;
+      padding: 20px 60px;
+    }
+
+    .logo-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 50px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* Nội dung chính */
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 40px auto;
       padding: 0 20px;
     }
+
     .section {
       background-color: #fff;
       border: 1px solid #dee2e6;
@@ -53,24 +122,39 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .section h2 {
+      color: #007bff;
       margin-top: 0;
-      color: #495057;
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 10px;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <nav>
-      <a href="/index.html">Trang Chủ</a>
-      <a href="/admin.html">Quản Lý</a>
-      <a href="/about.html">Về Chúng Tôi</a>
-      <a href="/profiles.html">Hồ Sơ Học Bổng</a>
-    </nav>
-    <h1>Về Chúng Tôi</h1>
+    <div class="top-header">
+      <span id="current-page-name">VỀ CHÚNG TÔI</span>
+      
+      <div class="dropdown">
+        <div class="dropdown-label" onclick="toggleMenu()">
+          Trang chủ <span style="font-size: 10px;">▼</span>
+        </div>
+        <div class="dropdown-content" id="myDropdown">
+          <a href="/index.html">Trang Chủ</a>
+          <a href="/about.html">Về Chúng Tôi</a>
+          <a href="/admin.html">Quản Lý</a>
+          <a href="/profiles.html">Hồ Sơ Học Bổng</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <div class="logo-box">
+        <h1>SCHOLAR SHARE</h1>
+      </div>
+    </div>
   </header>
+
   <div class="container">
     <div class="section">
       <h2>Giới Thiệu</h2>
@@ -85,5 +169,22 @@
       <p>Nếu bạn có câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email: support@scholarshipweb.com</p>
     </div>
   </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropdown-label')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          if (dropdowns[i].classList.contains('show')) {
+            dropdowns[i].classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
 </body>
 </html>

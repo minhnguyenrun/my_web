@@ -3,112 +3,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Lý Học Bổng - Admin</title>
+  <title>Scholar Share - Quản Lý</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-dark: #1a2533; 
+      --dropdown-bg: #1e1e1e;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #ffffff;
-      color: #333;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      background-color: #ffffff;
     }
-    header {
-      background-color: #f8f9fa;
-      padding: 10px 20px;
-      border-bottom: 1px solid #e9ecef;
+
+    /* Top Bar */
+    .top-header {
+      background-color: var(--primary-dark);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 15px 40px;
+      color: white;
+      font-size: 14px;
+      position: relative;
+      z-index: 1000;
     }
-    header h1 {
-      margin: 0;
-      color: #495057;
+
+    #current-page-name {
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    nav {
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dropdown-label {
+      font-weight: 600;
       display: flex;
-      gap: 20px;
+      align-items: center;
+      gap: 8px;
     }
-    nav a {
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: var(--dropdown-bg);
+      min-width: 240px;
+      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+      padding: 10px 0;
+      margin-top: 15px;
+    }
+
+    .dropdown-content a {
+      color: #bbbbbb;
+      padding: 15px 25px;
       text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
     }
-    nav a:hover {
-      background-color: #e9ecef;
+
+    .dropdown-content a:hover {
+      background-color: #2a2a2a;
+      color: white;
+      padding-left: 30px;
     }
+
+    .show { display: block; }
+
+    /* Hero Section */
+    .hero-section {
+      background-color: var(--primary-dark);
+      height: 280px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo-box {
+      border: 3px solid white;
+      padding: 20px 60px;
+    }
+
+    .logo-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 50px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* Nội dung chính */
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 40px auto;
       padding: 0 20px;
     }
-    .form-group {
-      margin-bottom: 15px;
+
+    #login-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-align: center;
     }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    .form-group input, .form-group textarea {
+
+    .form-group { margin-bottom: 20px; text-align: left; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+    .form-group input {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ced4da;
+      padding: 12px;
+      border: 1px solid #ddd;
       border-radius: 4px;
-      font-size: 16px;
+      box-sizing: border-box;
     }
-    .section {
-      border: 1px solid #dee2e6;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      background-color: #f8f9fa;
-    }
+
     .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #007bff;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn-success { background: var(--primary-dark); color: white; width: 100%; }
+
+    /* Grid học bổng */
+    .scholarships-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .scholarship {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .scholarship:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .scholarship img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .scholarship .content {
+      padding: 15px;
+    }
+
+    .scholarship h3 {
+      margin: 0 0 10px 0;
+      color: #007bff;
+    }
+
+    .btn-delete {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #dc3545;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
       cursor: pointer;
       font-size: 16px;
-      margin-right: 10px;
-      transition: background-color 0.3s;
+      line-height: 1;
     }
-    .btn:hover {
-      background-color: #0056b3;
-    }
-    .btn-danger {
-      background-color: #dc3545;
-    }
-    .btn-danger:hover {
+
+    .btn-delete:hover {
       background-color: #c82333;
-    }
-    .btn-success {
-      background-color: #28a745;
-    }
-    .btn-success:hover {
-      background-color: #218838;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <nav>
-      <a href="/index.html">Trang Chủ</a>
-      <a href="/admin.html">Quản Lý</a>
-      <a href="/about.html">Về Chúng Tôi</a>
-      <a href="/profiles.html">Hồ Sơ Học Bổng</a>
-    </nav>
-    <h1>Quản Lý Học Bổng - Thêm Học Bổng Mới</h1>
+    <div class="top-header">
+      <span id="current-page-name">QUẢN LÝ</span>
+      
+      <div class="dropdown">
+        <div class="dropdown-label" onclick="toggleMenu()">
+          Trang chủ <span style="font-size: 10px;">▼</span>
+        </div>
+        <div class="dropdown-content" id="myDropdown">
+          <a href="/index.html">Trang Chủ</a>
+          <a href="/about.html">Về Chúng Tôi</a>
+          <a href="/admin.html">Quản Lý</a>
+          <a href="/profiles.html">Hồ Sơ Học Bổng</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <div class="logo-box">
+        <h1>SCHOLAR SHARE</h1>
+      </div>
+    </div>
   </header>
+
   <div class="container">
     <div id="login-form">
-      <h2>Đăng Nhập Quản Lý</h2>
+      <h2 style="margin-top: 0;">Đăng Nhập Quản Lý</h2>
       <div class="form-group">
         <label>Tài Khoản</label>
         <input type="text" id="username">
@@ -117,24 +240,39 @@
         <label>Mật Khẩu</label>
         <input type="password" id="password">
       </div>
-      <button class="btn btn-success" onclick="login()">Đăng Nhập</button>
-      <div id="login-error" style="color: red; margin-top: 10px;"></div>
+      <button class="btn btn-success" onclick="login()">ĐĂNG NHẬP</button>
+      <div id="login-error" style="color: #dc3545; margin-top: 15px; font-size: 14px;"></div>
     </div>
 
     <div id="admin-content" style="display: none;">
-      <button class="btn btn-success" onclick="window.location.href='/create-scholarship.html'">Tạo Học Bổng Mới</button>
-      <br><br>
-      <h3>Danh Sách Học Bổng</h3>
-      <div id="scholarships-list"></div>
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 30px;">
+        <button class="btn" style="background: #28a745; color: white; width: auto;" onclick="window.location.href='/scholarship.html'">+ Tạo Học Bổng Mới</button>
+      </div>
+      <div id="scholarships-list" class="scholarships-grid"></div>
     </div>
   </div>
 
   <script>
+    function toggleMenu() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropdown-label')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          if (dropdowns[i].classList.contains('show')) {
+            dropdowns[i].classList.remove('show');
+          }
+        }
+      }
+    }
+
     function checkLogin() {
       if (localStorage.getItem('loggedin') === 'true') {
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('admin-content').style.display = 'block';
-        loadScholarships();
+        if (typeof loadScholarships === "function") loadScholarships();
       }
     }
 
@@ -145,7 +283,7 @@
         localStorage.setItem('loggedin', 'true');
         checkLogin();
       } else {
-        document.getElementById('login-error').innerText = 'Tài khoản hoặc mật khẩu sai!';
+        document.getElementById('login-error').innerText = 'Tài khoản hoặc mật khẩu không chính xác!';
       }
     }
 
@@ -155,23 +293,13 @@
         .then(data => {
           document.getElementById("scholarships-list").innerHTML =
             data.map(s => {
-              let description = s.summary || "";
-              if (s.sections && s.sections.length > 0) {
-                const firstSection = s.sections[0];
-                if (firstSection.type === 'text') {
-                  description = firstSection.content.substring(0, 100) + (firstSection.content.length > 100 ? '...' : '');
-                } else {
-                  description = '[Hình ảnh]';
-                }
-              }
-              return `<div class="scholarship" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-                <h4>${s.title}</h4>
-                <p>${description}</p>
-                <small>Deadline: ${s.deadline || "N/A"}</small>
-                <br><br>
-                <button class="btn" onclick="window.location.href='/edit-scholarship.html?id=${s.id}'">Chỉnh Sửa</button>
-                <button class="btn btn-danger" onclick="deleteScholarship(${s.id})">Xóa</button>
-                <a href="/detail/${s.id}" class="btn">Xem Chi Tiết</a>
+              let imageUrl = s.image || '/uploads/default_image.jpg';
+              return `<div class="scholarship" onclick="window.location.href='/scholarship.html?id=${s.id}'">
+                <img src="${imageUrl}" alt="${s.title}">
+                <div class="content">
+                  <h3>${s.title}</h3>
+                </div>
+                <button class="btn-delete" onclick="event.stopPropagation(); deleteScholarship(${s.id})">×</button>
               </div>`;
             }).join("");
         });

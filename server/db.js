@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS scholarships (
   deadline TEXT,
   content TEXT,
   form TEXT,
+  image TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -44,13 +45,15 @@ CREATE TABLE IF NOT EXISTS applications (
 
 console.log('Tables created');
 
+await db.exec(`ALTER TABLE scholarships ADD COLUMN image TEXT`).catch(() => {}); // Ignore if column exists
+
 // Insert sample data
-await db.run(`INSERT INTO scholarships (title, summary, deadline) VALUES (?, ?, ?)`, ['Học bổng A', 'Mô tả A', '2026-12-31']);
-const id1 = (await db.get('SELECT last_insert_rowid() as id')).id;
-await db.run(`INSERT INTO sections (scholarship_id, content, order_index, type) VALUES (?, ?, ?, ?)`, [id1, 'Nội dung section 1 cho học bổng A', 0, 'text']);
-await db.run(`INSERT INTO scholarships (title, summary, deadline) VALUES (?, ?, ?)`, ['Học bổng B', 'Mô tả B', '2026-11-30']);
-const id2 = (await db.get('SELECT last_insert_rowid() as id')).id;
-await db.run(`INSERT INTO sections (scholarship_id, content, order_index, type) VALUES (?, ?, ?, ?)`, [id2, 'Nội dung section B', 0, 'text']);
-console.log('Sample data inserted');
+// await db.run(`INSERT INTO scholarships (title, summary, deadline) VALUES (?, ?, ?)`, ['Học bổng A', 'Mô tả A', '2026-12-31']);
+// const id1 = (await db.get('SELECT last_insert_rowid() as id')).id;
+// await db.run(`INSERT INTO sections (scholarship_id, content, order_index, type) VALUES (?, ?, ?, ?)`, [id1, 'Nội dung section 1 cho học bổng A', 0, 'text']);
+// await db.run(`INSERT INTO scholarships (title, summary, deadline) VALUES (?, ?, ?)`, ['Học bổng B', 'Mô tả B', '2026-11-30']);
+// const id2 = (await db.get('SELECT last_insert_rowid() as id')).id;
+// await db.run(`INSERT INTO sections (scholarship_id, content, order_index, type) VALUES (?, ?, ?, ?)`, [id2, 'Nội dung section B', 0, 'text']);
+// console.log('Sample data inserted');
 
 export default db;
