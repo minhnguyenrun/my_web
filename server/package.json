@@ -2,7 +2,8 @@
   "name": "myapp-server",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "npm rebuild sqlite3"
   },
   "dependencies": {
     "cors": "^2.8.5",
