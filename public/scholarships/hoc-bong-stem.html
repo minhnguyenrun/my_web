@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Bổng STEM - Scholar Share</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #ff751f 0%, #ff9a56 100%);
+      --secondary-gradient: linear-gradient(135deg, #004aad 0%, #0066dd 100%);
+      --orange-primary: #ff751f;
+      --blue-primary: #004aad;
+      --dark-bg: #003380;
+      --dark-gradient: linear-gradient(135deg, #004aad 0%, #003380 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #333;
+      margin: 0;
+      padding-left: 280px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 117, 31, 0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 4px 15px rgba(255, 117, 31, 0.4), 0 0 30px rgba(255, 117, 31, 0.2); }
+      50% { text-shadow: 0 4px 20px rgba(255, 117, 31, 0.6), 0 0 40px rgba(255, 117, 31, 0.4); }
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--dark-gradient);
+      box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255, 117, 31, 0.1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 40px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 900;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      animation: glow 8s ease-in-out infinite;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 5px 15px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .sidebar-menu a:hover {
+      background: rgba(255, 117, 31, 0.2);
+      color: white;
+      border-left-color: #ff751f;
+      padding-left: 40px;
+      box-shadow: inset 0 0 20px rgba(255, 117, 31, 0.3);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .scholarship-header {
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 117, 31, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 74, 173, 0.3) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+      padding: 100px 60px 80px 60px;
+      text-align: center;
+      border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+
+    .scholarship-header::before {
+      content: '🔬';
+      position: absolute;
+      font-size: 250px;
+      right: -50px;
+      top: -50px;
+      opacity: 0.1;
+      pointer-events: none;
+      transform: rotate(-15deg);
+    }
+
+    .scholarship-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: white;
+      margin: 0 0 20px 0;
+      text-shadow: 
+        0 0 20px rgba(255, 117, 31, 0.5),
+        0 4px 10px rgba(0, 0, 0, 0.3);
+      animation: titleShine 5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes titleShine {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 117, 31, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3); }
+      50% { text-shadow: 0 0 40px rgba(255, 117, 31, 0.8), 0 4px 10px rgba(0, 0, 0, 0.3); }
+    }
+
+    .scholarship-header p {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0;
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .scholarship-badge {
+      display: inline-block;
+      background: var(--secondary-gradient);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 25px;
+      font-size: 16px;
+      box-shadow: 0 8px 20px rgba(0, 74, 173, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .scholarship-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 74, 173, 0.5);
+    }
+
+    .scholarship-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 60px;
+      margin: 60px;
+      box-shadow: 0 20px 60px rgba(255, 117, 31, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .scholarship-section:hover {
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .scholarship-section h2 {
+      font-size: 42px;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 30px 0;
+      border-bottom: 3px solid #ff751f;
+      padding-bottom: 20px;
+    }
+
+    .scholarship-section h3 {
+      color: #004aad;
+      font-size: 28px;
+      margin: 35px 0 20px 0;
+      font-weight: 600;
+    }
+
+    .scholarship-section p {
+      line-height: 1.9;
+      color: #555;
+      font-size: 17px;
+      margin: 18px 0;
+    }
+
+    .scholarship-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+
+    .scholarship-section li {
+      padding: 15px 0 15px 40px;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      font-size: 17px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .scholarship-section li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      color: #ff751f;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .scholarship-summary {
+      background: var(--primary-gradient);
+      padding: 45px 55px;
+      border-radius: 25px;
+      margin: 50px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.35);
+    }
+
+    .scholarship-summary h3 {
+      color: white;
+      font-size: 32px;
+      margin: 0 0 25px 0;
+      font-weight: 700;
+    }
+
+    .scholarship-summary p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 15px 0;
+    }
+
+    .scholarship-summary strong {
+      color: #ffe;
+      font-weight: 700;
+    }
+
+    .stem-highlight {
+      background: linear-gradient(135deg, #004aad 0%, #0088dd 100%);
+      padding: 40px;
+      border-radius: 20px;
+      margin: 40px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(0, 74, 173, 0.3);
+    }
+
+    .stem-highlight h3 {
+      color: white;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .stem-highlight p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 17px;
+    }
+
+    .stem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .stem-card {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.2);
+      transition: all 0.3s ease;
+      border: 2px solid #eee;
+    }
+
+    .stem-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.3);
+      border-color: #ff751f;
+    }
+
+    .stem-card h4 {
+      color: #004aad;
+      font-size: 24px;
+      margin: 0 0 15px 0;
+      font-weight: 700;
+    }
+
+    .stem-card p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .stem-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .apply-button {
+      display: inline-block;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 18px 50px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 40px 0 20px 0;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.4);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .apply-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.5);
+    }
+
+    footer {
+      background: var(--dark-gradient);
+      color: white;
+      text-align: center;
+      padding: 50px 30px;
+      margin-top: 80px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      margin: 25px 0;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 117, 31, 0.9);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 117, 31, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .facebook-icon, .email-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .footer-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin: 10px 0;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="../index.html">🏠 Trang Chủ</a></li>
+      <li><a href="../about.html">📖 Về Chúng Tôi</a></li>
+      <li><a href="../profiles.html">📋 Hồ Sơ Học Bổng</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header class="scholarship-header">
+      <h1>Học Bổng STEM</h1>
+      <p>Science • Technology • Engineering • Mathematics</p>
+      <span class="scholarship-badge">🔬 Chương Trình Ưu Tiên</span>
+    </header>
+
+    <section class="scholarship-section">
+      <h2>📚 Tổng Quan Học Bổng STEM</h2>
+      
+      <p>Học bổng STEM là chương trình tài trợ đặc biệt dành cho sinh viên có năng khiếu và đam mê trong các lĩnh vực Khoa học tự nhiên (Science), Công nghệ (Technology), Kỹ thuật (Engineering), và Toán học (Mathematics).</p>
+
+      <div class="stem-highlight">
+        <h3>🎯 Tại Sao Chọn STEM?</h3>
+        <p>Trong thời đại Cách mạng Công nghiệp 4.0, các chuyên ngành STEM đang là xu hướng phát triển hàng đầu với nhu cầu nhân lực cao và mức lương hấp dẫn. Học bổng STEM không chỉ hỗ trợ tài chính mà còn mở ra cơ hội nghiên cứu, thực hành và kết nối với các chuyên gia hàng đầu trong ngành.</p>
+      </div>
+
+      <div class="stem-grid">
+        <div class="stem-card">
+          <span class="stem-icon">🔬</span>
+          <h4>Science - Khoa Học</h4>
+          <p>Sinh học, Hóa học, Vật lý, Khoa học môi trường, Khoa học vật liệu</p>
+        </div>
+        <div class="stem-card">
+          <span class="stem-icon">💻</span>
+          <h4>Technology - Công Nghệ</h4>
+          <p>Công nghệ thông tin, An ninh mạng, AI, Machine Learning, Data Science</p>
+        </div>
+        <div class="stem-card">
+          <span class="stem-icon">⚙️</span>
+          <h4>Engineering - Kỹ Thuật</h4>
+          <p>Kỹ thuật cơ khí, Điện tử viễn thông, Xây dựng, Kỹ thuật phần mềm</p>
+        </div>
+        <div class="stem-card">
+          <span class="stem-icon">📐</span>
+          <h4>Mathematics - Toán Học</h4>
+          <p>Toán ứng dụng, Thống kê, Toán tài chính, Mô hình hóa toán học</p>
+        </div>
+      </div>
+
+      <h3>✅ Đối Tượng và Điều Kiện</h3>
+      <ul>
+        <li>Là sinh viên đang theo học hoặc đã được nhận vào các chương trình STEM tại các trường đại học uy tín</li>
+        <li>Có điểm trung bình tích lũy (GPA) từ 3.0/4.0 trở lên hoặc tương đương</li>
+        <li>Có thành tích học tập xuất sắc trong các môn Toán, Khoa học, Công nghệ</li>
+        <li>Có dự án nghiên cứu, sản phẩm khoa học hoặc tham gia các cuộc thi STEM (nếu có)</li>
+        <li>Có tinh thần học hỏi, sáng tạo và đam mê khám phá khoa học công nghệ</li>
+        <li>Có hoàn cảnh khó khăn về tài chính, cần hỗ trợ để tiếp tục học tập</li>
+        <li>Có khả năng giao tiếp tiếng Anh tốt (ưu tiên có chứng chỉ TOEFL/IELTS)</li>
+      </ul>
+
+      <h3>💰 Quyền Lợi Học Bổng</h3>
+      <div class="scholarship-summary">
+        <h3>Gói Hỗ Trợ Toàn Diện</h3>
+        <p><strong>• Học phí:</strong> Hỗ trợ 50-100% học phí toàn khóa học (4-5 năm)</p>
+        <p><strong>• Sinh hoạt phí:</strong> 5-8 triệu VNĐ/tháng cho chi phí sinh hoạt</p>
+        <p><strong>• Thiết bị học tập:</strong> Hỗ trợ laptop, máy tính bảng và phần mềm chuyên ngành</p>
+        <p><strong>• Nghiên cứu:</strong> Kinh phí 10-30 triệu VNĐ cho dự án nghiên cứu khoa học cá nhân</p>
+        <p><strong>• Thực tập:</strong> Cơ hội thực tập tại các công ty công nghệ hàng đầu</p>
+        <p><strong>• Mentorship:</strong> Kết nối với các chuyên gia, giảng viên giàu kinh nghiệm</p>
+        <p><strong>• Hội thảo:</strong> Tham gia miễn phí các hội thảo, workshop về STEM trong và ngoài nước</p>
+      </div>
+
+      <h3>📝 Hồ Sơ Đăng Ký</h3>
+      <ul>
+        <li>Đơn xin học bổng (theo mẫu)</li>
+        <li>Bản sao học bạ THPT hoặc bảng điểm đại học (có công chứng)</li>
+        <li>Giấy chứng nhận trúng tuyển đại học hoặc giấy xác nhận đang là sinh viên</li>
+        <li>Giấy xác nhận hoàn cảnh gia đình (do chính quyền địa phương cấp)</li>
+        <li>Bài luận động lực (500-1000 từ) về lý do học STEM và mục tiêu nghề nghiệp</li>
+        <li>Portfolio dự án STEM (nếu có): dự án nghiên cứu, sản phẩm khoa học, giải thưởng</li>
+        <li>2 thư giới thiệu từ giáo viên/giảng viên chuyên ngành</li>
+        <li>Chứng chỉ tiếng Anh (TOEFL/IELTS) hoặc bằng chứng năng lực tiếng Anh</li>
+        <li>Video giới thiệu bản thân (2-3 phút) về đam mê STEM (khuyến khích)</li>
+      </ul>
+
+      <h3>🎯 Quy Trình Tuyển Chọn</h3>
+      <p><strong>Bước 1 - Nộp hồ sơ online:</strong> Hoàn thành form đăng ký và upload đầy đủ tài liệu lên hệ thống (Deadline: 30/06/2026)</p>
+      <p><strong>Bước 2 - Sơ tuyển hồ sơ:</strong> Ban tổ chức xem xét và đánh giá hồ sơ, thông báo kết quả qua email sau 2 tuần</p>
+      <p><strong>Bước 3 - Phỏng vấn trực tiếp:</strong> Ứng viên đạt vòng sơ tuyển sẽ được mời phỏng vấn về kiến thức chuyên môn, dự án và động lực</p>
+      <p><strong>Bước 4 - Kiểm tra kỹ năng:</strong> Làm bài test chuyên môn hoặc trình bày dự án STEM (tùy ngành)</p>
+      <p><strong>Bước 5 - Công bố kết quả:</strong> Danh sách người trúng tuyển được công bố trên website và gửi thư thông báo chính thức</p>
+
+      <div class="stem-highlight">
+        <h3>💡 Lời Khuyên Từ Ban Tổ Chức</h3>
+        <p><strong>Hãy thể hiện đam mê thật sự!</strong> Chúng tôi không chỉ tìm kiếm những sinh viên có điểm cao, mà còn tìm những người có niềm đam mê bùng cháy với khoa học công nghệ. Hãy chia sẻ câu chuyện của bạn, những dự án bạn đã làm, và tầm nhìn về tương lai bạn muốn đóng góp cho xã hội thông qua STEM.</p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="../apply.html" class="apply-button">🚀 Đăng Ký Ngay</a>
+        <p style="margin-top: 20px; color: #888;">Hạn nộp hồ sơ: <strong style="color: #ff751f;">30/06/2026</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">Kết nối với chúng tôi</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank" rel="noopener noreferrer">
+          <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook
+        </a>
+        <a href="mailto:phatphamussh23@gmail.com">
+          <svg class="email-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

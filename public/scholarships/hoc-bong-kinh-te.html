@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Bổng Kinh Tế - Scholar Share</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #ff751f 0%, #ff9a56 100%);
+      --secondary-gradient: linear-gradient(135deg, #004aad 0%, #0066dd 100%);
+      --orange-primary: #ff751f;
+      --blue-primary: #004aad;
+      --dark-bg: #003380;
+      --dark-gradient: linear-gradient(135deg, #004aad 0%, #003380 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #333;
+      margin: 0;
+      padding-left: 280px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 117, 31, 0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 4px 15px rgba(255, 117, 31, 0.4), 0 0 30px rgba(255, 117, 31, 0.2); }
+      50% { text-shadow: 0 4px 20px rgba(255, 117, 31, 0.6), 0 0 40px rgba(255, 117, 31, 0.4); }
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--dark-gradient);
+      box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255, 117, 31, 0.1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 40px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 900;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      animation: glow 8s ease-in-out infinite;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 5px 15px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .sidebar-menu a:hover {
+      background: rgba(255, 117, 31, 0.2);
+      color: white;
+      border-left-color: #ff751f;
+      padding-left: 40px;
+      box-shadow: inset 0 0 20px rgba(255, 117, 31, 0.3);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .scholarship-header {
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 117, 31, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 74, 173, 0.3) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+      padding: 100px 60px 80px 60px;
+      text-align: center;
+      border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+
+    .scholarship-header::before {
+      content: '💼';
+      position: absolute;
+      font-size: 250px;
+      right: -50px;
+      top: -50px;
+      opacity: 0.1;
+      pointer-events: none;
+      transform: rotate(-15deg);
+    }
+
+    .scholarship-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: white;
+      margin: 0 0 20px 0;
+      text-shadow: 
+        0 0 20px rgba(255, 117, 31, 0.5),
+        0 4px 10px rgba(0, 0, 0, 0.3);
+      animation: titleShine 5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes titleShine {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 117, 31, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3); }
+      50% { text-shadow: 0 0 40px rgba(255, 117, 31, 0.8), 0 4px 10px rgba(0, 0, 0, 0.3); }
+    }
+
+    .scholarship-header p {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0;
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .scholarship-badge {
+      display: inline-block;
+      background: var(--secondary-gradient);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 25px;
+      font-size: 16px;
+      box-shadow: 0 8px 20px rgba(0, 74, 173, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .scholarship-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 74, 173, 0.5);
+    }
+
+    .scholarship-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 60px;
+      margin: 60px;
+      box-shadow: 0 20px 60px rgba(255, 117, 31, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .scholarship-section:hover {
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .scholarship-section h2 {
+      font-size: 42px;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 30px 0;
+      border-bottom: 3px solid #ff751f;
+      padding-bottom: 20px;
+    }
+
+    .scholarship-section h3 {
+      color: #004aad;
+      font-size: 28px;
+      margin: 35px 0 20px 0;
+      font-weight: 600;
+    }
+
+    .scholarship-section p {
+      line-height: 1.9;
+      color: #555;
+      font-size: 17px;
+      margin: 18px 0;
+    }
+
+    .scholarship-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+
+    .scholarship-section li {
+      padding: 15px 0 15px 40px;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      font-size: 17px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .scholarship-section li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      color: #ff751f;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .scholarship-summary {
+      background: var(--primary-gradient);
+      padding: 45px 55px;
+      border-radius: 25px;
+      margin: 50px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.35);
+    }
+
+    .scholarship-summary h3 {
+      color: white;
+      font-size: 32px;
+      margin: 0 0 25px 0;
+      font-weight: 700;
+    }
+
+    .scholarship-summary p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 15px 0;
+    }
+
+    .scholarship-summary strong {
+      color: #ffe;
+      font-weight: 700;
+    }
+
+    .econ-highlight {
+      background: linear-gradient(135deg, #004aad 0%, #0088dd 100%);
+      padding: 40px;
+      border-radius: 20px;
+      margin: 40px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(0, 74, 173, 0.3);
+    }
+
+    .econ-highlight h3 {
+      color: white;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .econ-highlight p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 17px;
+    }
+
+    .econ-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .econ-card {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.2);
+      transition: all 0.3s ease;
+      border: 2px solid #eee;
+    }
+
+    .econ-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.3);
+      border-color: #ff751f;
+    }
+
+    .econ-card h4 {
+      color: #004aad;
+      font-size: 24px;
+      margin: 0 0 15px 0;
+      font-weight: 700;
+    }
+
+    .econ-card p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .econ-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .apply-button {
+      display: inline-block;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 18px 50px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 40px 0 20px 0;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.4);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .apply-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.5);
+    }
+
+    footer {
+      background: var(--dark-gradient);
+      color: white;
+      text-align: center;
+      padding: 50px 30px;
+      margin-top: 80px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      margin: 25px 0;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 117, 31, 0.9);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 117, 31, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .facebook-icon, .email-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .footer-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin: 10px 0;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="../index.html">🏠 Trang Chủ</a></li>
+      <li><a href="../about.html">📖 Về Chúng Tôi</a></li>
+      <li><a href="../profiles.html">📋 Hồ Sơ Học Bổng</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header class="scholarship-header">
+      <h1>Học Bổng Kinh Tế</h1>
+      <p>Economics • Business • Finance</p>
+      <span class="scholarship-badge">💼 Chương Trình Đặc Biệt</span>
+    </header>
+
+    <section class="scholarship-section">
+      <h2>📊 Tổng Quan Học Bổng Kinh Tế</h2>
+      
+      <p>Học bổng Kinh Tế là chương trình hỗ trợ tài chính dành cho sinh viên có năng lực và tiềm năng trong các lĩnh vực Kinh tế học, Quản trị kinh doanh, Tài chính ngân hàng, Marketing, và các ngành liên quan đến kinh tế - thương mại.</p>
+
+      <div class="econ-highlight">
+        <h3>🌟 Tại Sao Chọn Kinh Tế?</h3>
+        <p>Trong bối cảnh toàn cầu hóa và hội nhập quốc tế, các chuyên gia kinh tế đóng vai trò then chốt trong việc định hình chính sách, quản lý doanh nghiệp, và phát triển kinh tế. Học bổng Kinh Tế không chỉ giúp bạn hoàn thành ước mơ học tập mà còn mở ra cơ hội làm việc tại các tập đoàn lớn, tổ chức tài chính hàng đầu và các cơ quan chính phủ.</p>
+      </div>
+
+      <div class="econ-grid">
+        <div class="econ-card">
+          <span class="econ-icon">📈</span>
+          <h4>Kinh Tế</h4>
+          <p>Kinh tế vi mô, Kinh tế vĩ mô, Kinh tế quốc tế, Kinh tế phát triển, Chính sách công</p>
+        </div>
+        <div class="econ-card">
+          <span class="econ-icon">💼</span>
+          <h4>Quản Trị</h4>
+          <p>Quản trị kinh doanh, Quản trị chiến lược, Quản trị nhân sự, Quản trị chuỗi cung ứng</p>
+        </div>
+        <div class="econ-card">
+          <span class="econ-icon">💰</span>
+          <h4>Tài Chính</h4>
+          <p>Tài chính doanh nghiệp, Ngân hàng, Đầu tư chứng khoán, Bảo hiểm, Fintech</p>
+        </div>
+        <div class="econ-card">
+          <span class="econ-icon">📊</span>
+          <h4>Kế Toán</h4>
+          <p>Kế toán tài chính, Kế toán quản trị, Kiểm toán, Kế toán thuế</p>
+        </div>
+        <div class="econ-card">
+          <span class="econ-icon">📢</span>
+          <h4>Marketing</h4>
+          <p>Marketing số, Brand Management, Consumer Behavior, Marketing Strategy</p>
+        </div>
+        <div class="econ-card">
+          <span class="econ-icon">🌐</span>
+          <h4>Thương Mại</h4>
+          <p>Thương mại quốc tế, Kinh doanh thương mại điện tử, Logistics</p>
+        </div>
+      </div>
+
+      <h3>✅ Đối Tượng và Điều Kiện</h3>
+      <ul>
+        <li>Là sinh viên đang theo học hoặc đã được nhận vào các chương trình Kinh tế tại các trường đại học uy tín</li>
+        <li>Có điểm trung bình tích lũy (GPA) từ 2.8/4.0 trở lên hoặc tương đương</li>
+        <li>Có thành tích học tập tốt trong các môn Kinh tế, Toán, Tiếng Anh</li>
+        <li>Có tinh thần lãnh đạo, kỹ năng làm việc nhóm và tư duy phân tích tốt</li>
+        <li>Có tham gia các hoạt động ngoại khóa: câu lạc bộ kinh tế, dự án khởi nghiệp, tình nguyện (ưu tiên)</li>
+        <li>Có hoàn cảnh khó khăn về tài chính, cần hỗ trợ để tiếp tục học tập</li>
+        <li>Có khả năng giao tiếp tiếng Anh tốt (TOEFL/IELTS là lợi thế)</li>
+        <li>Có định hướng nghề nghiệp rõ ràng trong lĩnh vực kinh tế</li>
+      </ul>
+
+      <h3>💰 Quyền Lợi Học Bổng</h3>
+      <div class="scholarship-summary">
+        <h3>Gói Hỗ Trợ Đặc Biệt</h3>
+        <p><strong>• Học phí:</strong> Hỗ trợ 40-80% học phí toàn khóa học (4 năm)</p>
+        <p><strong>• Sinh hoạt phí:</strong> 4-6 triệu VNĐ/tháng cho chi phí sinh hoạt</p>
+        <p><strong>• Sách và học liệu:</strong> Hỗ trợ mua sách giáo trình, tài liệu chuyên ngành</p>
+        <p><strong>• Khóa học bổ trợ:</strong> Miễn phí các khóa Excel, PowerBI, CFA, CPA cơ bản</p>
+        <p><strong>• Thực tập:</strong> Cơ hội thực tập tại các ngân hàng, công ty tài chính, doanh nghiệp lớn</p>
+        <p><strong>• Mentorship:</strong> Kết nối với các chuyên gia kinh tế, doanh nhân thành công</p>
+        <p><strong>• Networking:</strong> Tham gia các buổi gặp gỡ doanh nghiệp, hội thảo kinh tế</p>
+        <p><strong>• Chứng chỉ:</strong> Hỗ trợ chi phí thi chứng chỉ nghề nghiệp (CFA, FRM, ACCA...)</p>
+      </div>
+
+      <h3>📝 Hồ Sơ Đăng Ký</h3>
+      <ul>
+        <li>Đơn xin học bổng (theo mẫu)</li>
+        <li>Bản sao học bạ THPT hoặc bảng điểm đại học (có công chứng)</li>
+        <li>Giấy chứng nhận trúng tuyển đại học hoặc giấy xác nhận đang là sinh viên</li>
+        <li>Giấy xác nhận hoàn cảnh gia đình (do chính quyền địa phương cấp)</li>
+        <li>Bài luận động lực (500-1000 từ) về mục tiêu nghề nghiệp và đóng góp cho xã hội</li>
+        <li>CV cá nhân (nếu có kinh nghiệm thực tập, làm việc part-time)</li>
+        <li>Chứng chỉ/giải thưởng liên quan đến hoạt động kinh tế, kinh doanh (nếu có)</li>
+        <li>2 thư giới thiệu từ giáo viên/giảng viên hoặc từ nơi thực tập/làm việc</li>
+        <li>Chứng chỉ tiếng Anh (TOEFL/IELTS) hoặc bằng chứng năng lực tiếng Anh</li>
+      </ul>
+
+      <h3>🎯 Quy Trình Tuyển Chọn</h3>
+      <p><strong>Bước 1 - Đăng ký trực tuyến:</strong> Hoàn thành form đăng ký và nộp hồ sơ đầy đủ trên hệ thống (Deadline: 15/07/2026)</p>
+      <p><strong>Bước 2 - Thẩm định hồ sơ:</strong> Hội đồng xét duyệt hồ sơ dựa trên học lực, hoàn cảnh và tiềm năng phát triển (2 tuần)</p>
+      <p><strong>Bước 3 - Phỏng vấn cá nhân:</strong> Phỏng vấn về kiến thức chuyên môn, kỹ năng mềm, và định hướng nghề nghiệp</p>
+      <p><strong>Bước 4 - Đánh giá tình huống:</strong> Làm bài case study hoặc trình bày giải pháp kinh doanh</p>
+      <p><strong>Bước 5 - Thông báo kết quả:</strong> Danh sách trúng tuyển được công bố và gửi email thông báo chính thức</p>
+
+      <div class="econ-highlight">
+        <h3>💡 Bí Quyết Ghi Điểm</h3>
+        <p><strong>Hãy cho chúng tôi thấy tầm nhìn của bạn!</strong> Chúng tôi không chỉ tìm kiếm những sinh viên học giỏi, mà còn tìm những người có tư duy kinh tế nhạy bén, hiểu biết thời sự, và có định hướng rõ ràng về nghề nghiệp. Hãy thể hiện khả năng phân tích, giải quyết vấn đề, và đam mê với lĩnh vực kinh tế trong hồ sơ và phỏng vấn của bạn.</p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="../apply.html" class="apply-button">🚀 Đăng Ký Ngay</a>
+        <p style="margin-top: 20px; color: #888;">Hạn nộp hồ sơ: <strong style="color: #ff751f;">15/07/2026</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">Kết nối với chúng tôi</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank" rel="noopener noreferrer">
+          <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook
+        </a>
+        <a href="mailto:phatphamussh23@gmail.com">
+          <svg class="email-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

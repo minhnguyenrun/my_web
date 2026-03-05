@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Bổng Du Học - Scholar Share</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #ff751f 0%, #ff9a56 100%);
+      --secondary-gradient: linear-gradient(135deg, #004aad 0%, #0066dd 100%);
+      --orange-primary: #ff751f;
+      --blue-primary: #004aad;
+      --dark-bg: #003380;
+      --dark-gradient: linear-gradient(135deg, #004aad 0%, #003380 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #333;
+      margin: 0;
+      padding-left: 280px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 117, 31, 0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 4px 15px rgba(255, 117, 31, 0.4), 0 0 30px rgba(255, 117, 31, 0.2); }
+      50% { text-shadow: 0 4px 20px rgba(255, 117, 31, 0.6), 0 0 40px rgba(255, 117, 31, 0.4); }
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--dark-gradient);
+      box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255, 117, 31, 0.1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 40px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 900;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      animation: glow 8s ease-in-out infinite;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin: 5px 15px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .sidebar-menu a:hover {
+      background: rgba(255, 117, 31, 0.2);
+      color: white;
+      border-left-color: #ff751f;
+      padding-left: 40px;
+      box-shadow: inset 0 0 20px rgba(255, 117, 31, 0.3);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .scholarship-header {
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 117, 31, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 74, 173, 0.3) 0%, transparent 50%);
+      animation: pulse 8s ease-in-out infinite;
+      padding: 100px 60px 80px 60px;
+      text-align: center;
+      border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+
+    .scholarship-header::before {
+      content: '✈️';
+      position: absolute;
+      font-size: 250px;
+      right: -50px;
+      top: -50px;
+      opacity: 0.1;
+      pointer-events: none;
+      transform: rotate(-15deg);
+    }
+
+    .scholarship-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: white;
+      margin: 0 0 20px 0;
+      text-shadow: 
+        0 0 20px rgba(255, 117, 31, 0.5),
+        0 4px 10px rgba(0, 0, 0, 0.3);
+      animation: titleShine 5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes titleShine {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 117, 31, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3); }
+      50% { text-shadow: 0 0 40px rgba(255, 117, 31, 0.8), 0 4px 10px rgba(0, 0, 0, 0.3); }
+    }
+
+    .scholarship-header p {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.95);
+      margin: 0;
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .scholarship-badge {
+      display: inline-block;
+      background: var(--secondary-gradient);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 25px;
+      font-size: 16px;
+      box-shadow: 0 8px 20px rgba(0, 74, 173, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .scholarship-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 74, 173, 0.5);
+    }
+
+    .scholarship-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 60px;
+      margin: 60px;
+      box-shadow: 0 20px 60px rgba(255, 117, 31, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .scholarship-section:hover {
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .scholarship-section h2 {
+      font-size: 42px;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 30px 0;
+      border-bottom: 3px solid #ff751f;
+      padding-bottom: 20px;
+    }
+
+    .scholarship-section h3 {
+      color: #004aad;
+      font-size: 28px;
+      margin: 35px 0 20px 0;
+      font-weight: 600;
+    }
+
+    .scholarship-section p {
+      line-height: 1.9;
+      color: #555;
+      font-size: 17px;
+      margin: 18px 0;
+    }
+
+    .scholarship-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+
+    .scholarship-section li {
+      padding: 15px 0 15px 40px;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      font-size: 17px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .scholarship-section li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      color: #ff751f;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .scholarship-summary {
+      background: var(--primary-gradient);
+      padding: 45px 55px;
+      border-radius: 25px;
+      margin: 50px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.35);
+    }
+
+    .scholarship-summary h3 {
+      color: white;
+      font-size: 32px;
+      margin: 0 0 25px 0;
+      font-weight: 700;
+    }
+
+    .scholarship-summary p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 15px 0;
+    }
+
+    .scholarship-summary strong {
+      color: #ffe;
+      font-weight: 700;
+    }
+
+    .study-abroad-highlight {
+      background: linear-gradient(135deg, #004aad 0%, #0088dd 100%);
+      padding: 40px;
+      border-radius: 20px;
+      margin: 40px 0;
+      color: white;
+      box-shadow: 0 15px 40px rgba(0, 74, 173, 0.3);
+    }
+
+    .study-abroad-highlight h3 {
+      color: white;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .study-abroad-highlight p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 17px;
+    }
+
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .country-card {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.2);
+      transition: all 0.3s ease;
+      border: 2px solid #eee;
+      text-align: center;
+    }
+
+    .country-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255, 117, 31, 0.3);
+      border-color: #ff751f;
+    }
+
+    .country-card h4 {
+      color: #004aad;
+      font-size: 24px;
+      margin: 15px 0;
+      font-weight: 700;
+    }
+
+    .country-card p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .country-flag {
+      font-size: 64px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .apply-button {
+      display: inline-block;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 18px 50px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 40px 0 20px 0;
+      box-shadow: 0 10px 30px rgba(255, 117, 31, 0.4);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .apply-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 117, 31, 0.5);
+    }
+
+    footer {
+      background: var(--dark-gradient);
+      color: white;
+      text-align: center;
+      padding: 50px 30px;
+      margin-top: 80px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      margin: 25px 0;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 117, 31, 0.9);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 117, 31, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .facebook-icon, .email-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .footer-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin: 10px 0;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="../index.html">🏠 Trang Chủ</a></li>
+      <li><a href="../about.html">📖 Về Chúng Tôi</a></li>
+      <li><a href="../profiles.html">📋 Hồ Sơ Học Bổng</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header class="scholarship-header">
+      <h1>Học Bổng Du Học</h1>
+      <p>Study Abroad • Global Education • International Experience</p>
+      <span class="scholarship-badge">✈️ Cơ Hội Toàn Cầu</span>
+    </header>
+
+    <section class="scholarship-section">
+      <h2>🌍 Tổng Quan Học Bổng Du Học</h2>
+      
+      <p>Học bổng Du học là cơ hội vàng để sinh viên Việt Nam tiếp cận nền giáo dục tiên tiến, trải nghiệm văn hóa quốc tế và phát triển toàn diện kỹ năng học thuật, ngôn ngữ và hội nhập toàn cầu. Đây là chương trình hỗ trợ toàn diện cho sinh viên có ước mơ học tập tại các trường đại học hàng đầu thế giới.</p>
+
+      <div class="study-abroad-highlight">
+        <h3>🎯 Tại Sao Nên Du Học?</h3>
+        <p>Du học không chỉ là việc lấy bằng cấp quốc tế, mà còn là hành trình trải nghiệm, học hỏi và trưởng thành. Bạn sẽ được tiếp xúc với phương pháp giảng dạy hiện đại, cơ sở vật chất tiên tiến, mạng lưới quan hệ toàn cầu và cơ hội việc làm quốc tế. Học bổng du học giúp giảm gánh nặng tài chính, cho phép bạn tập trung 100% vào học tập và phát triển bản thân.</p>
+      </div>
+
+      <div class="countries-grid">
+        <div class="country-card">
+          <span class="country-flag">🇺🇸</span>
+          <h4>Hoa Kỳ</h4>
+          <p>Top 100 QS Universities, đa dạng ngành học, cơ hội OPT/CPT, visa F-1</p>
+        </div>
+        <div class="country-card">
+          <span class="country-flag">🇬🇧</span>
+          <h4>Anh Quốc</h4>
+          <p>Oxford, Cambridge, Imperial, học bổng Chevening, visa Graduate Route</p>
+        </div>
+        <div class="country-card">
+          <span class="country-flag">🇦🇺</span>
+          <h4>Úc</h4>
+          <p>Group of Eight, môi trường đa văn hóa, visa post-study work 2-4 năm</p>
+        </div>
+        <div class="country-card">
+          <span class="country-flag">🇨🇦</span>
+          <h4>Canada</h4>
+          <p>Chi phí hợp lý, chất lượng cao, PGWP, định cư thuận lợi</p>
+        </div>
+        <div class="country-card">
+          <span class="country-flag">🇩🇪</span>
+          <h4>Đức</h4>
+          <p>Học phí miễn phí/thấp, kỹ thuật mạnh, cơ hội việc làm EU</p>
+        </div>
+        <div class="country-card">
+          <span class="country-flag">🇸🇬</span>
+          <h4>Singapore</h4>
+          <p>NUS, NTU top châu Á, gần Việt Nam, cơ hội việc làm cao</p>
+        </div>
+      </div>
+
+      <h3>✅ Đối Tượng và Điều Kiện</h3>
+      <ul>
+        <li>Là học sinh THPT hoặc sinh viên đại học có nguyện vọng du học</li>
+        <li>Có kết quả học tập tốt: GPA từ 3.2/4.0 trở lên (hoặc tương đương)</li>
+        <li>Có chứng chỉ ngoại ngữ: IELTS 6.5+, TOEFL 80+, hoặc SAT/ACT (nếu đi Mỹ)</li>
+        <li>Có thư giới thiệu từ giáo viên, thầy cô hoặc người có uy tín</li>
+        <li>Bài luận động lực (Statement of Purpose) thể hiện mục tiêu rõ ràng</li>
+        <li>Có hoạt động ngoại khóa, tình nguyện, leadership (ưu tiên)</li>
+        <li>Có hoàn cảnh khó khăn về tài chính, cần hỗ trợ để du học</li>
+        <li>Cam kết trở về Việt Nam đóng góp sau khi tốt nghiệp (một số học bổng)</li>
+      </ul>
+
+      <h3>💰 Quyền Lợi Học Bổng</h3>
+      <div class="scholarship-summary">
+        <h3>Gói Hỗ Trợ Toàn Diện Du Học</h3>
+        <p><strong>• Học phí:</strong> Hỗ trợ 50-100% học phí (10,000 - 60,000 USD/năm tùy quốc gia)</p>
+        <p><strong>• Sinh hoạt phí:</strong> 800-2,000 USD/tháng (tùy thành phố và quốc gia)</p>
+        <p><strong>• Vé máy bay:</strong> Vé khứ hồi hàng năm về Việt Nam</p>
+        <p><strong>• Bảo hiểm y tế:</strong> Bảo hiểm y tế quốc tế toàn diện</p>
+        <p><strong>• Chỗ ở:</strong> Hỗ trợ ký túc xá hoặc trợ cấp thuê nhà</p>
+        <p><strong>• Visa & hành chính:</strong> Hỗ trợ làm visa, giấy tờ nhập học</p>
+        <p><strong>• Mentorship:</strong> Kết nối với cựu sinh viên, alumni network</p>
+        <p><strong>• Khóa chuẩn bị:</strong> Pre-departure orientation, academic skills preparation</p>
+      </div>
+
+      <h3>📝 Hồ Sơ Đăng Ký</h3>
+      <ul>
+        <li>Đơn xin học bổng (theo mẫu của từng chương trình)</li>
+        <li>Bảng điểm THPT hoặc đại học (transcript) có công chứng và dịch thuật</li>
+        <li>Chứng chỉ ngoại ngữ: IELTS, TOEFL, SAT, ACT (tùy quốc gia)</li>
+        <li>Thư giới thiệu (2-3 thư từ giáo viên/giảng viên)</li>
+        <li>Statement of Purpose (SOP): Bài luận 500-1000 từ về mục tiêu du học</li>
+        <li>CV cá nhân (resume) thể hiện thành tích học tập và hoạt động</li>
+        <li>Giấy xác nhận hoàn cảnh gia đình (nếu xét tiêu chí tài chính)</li>
+        <li>Giấy chứng nhận giải thưởng, hoạt động ngoại khóa (nếu có)</li>
+        <li>Portfolio (nếu ngành thiết kế, nghệ thuật)</li>
+        <li>Copy passport hợp lệ</li>
+      </ul>
+
+      <h3>🎯 Quy Trình Tuyển Chọn</h3>
+      <p><strong>Bước 1 - Đăng ký trực tuyến:</strong> Hoàn thành form và nộp hồ sơ đầy đủ (Deadline: 30/08/2026)</p>
+      <p><strong>Bước 2 - Sàng lọc hồ sơ:</strong> Xét duyệt học lực, ngoại ngữ, hoàn cảnh (3-4 tuần)</p>
+      <p><strong>Bước 3 - Phỏng vấn:</strong> Phỏng vấn bằng tiếng Anh về mục tiêu, kế hoạch học tập</p>
+      <p><strong>Bước 4 - Matching trường:</strong> Tư vấn chọn trường, ngành học phù hợp</p>
+      <p><strong>Bước 5 - Hỗ trợ apply:</strong> Hỗ trợ nộp hồ sơ vào trường đại học</p>
+      <p><strong>Bước 6 - Công bố kết quả:</strong> Thông báo trúng tuyển và nhận học bổng</p>
+      <p><strong>Bước 7 - Hỗ trợ visa:</strong> Làm thủ tục visa, chuẩn bị xuất cảnh</p>
+
+      <div class="study-abroad-highlight">
+        <h3>💡 Lời Khuyên Từ Du Học Sinh</h3>
+        <p><strong>Hãy bắt đầu sớm!</strong> Việc chuẩn bị du học cần thời gian: học ngoại ngữ, thi chứng chỉ, viết bài luận, xin thư giới thiệu... Bắt đầu từ 1-2 năm trước khi dự định đi là lý tưởng. Hãy thể hiện sự khác biệt của bạn trong hồ sơ - không chỉ điểm số, mà còn là câu chuyện, passion và vision. Tìm hiểu kỹ về văn hóa, khí hậu, chi phí sinh hoạt của quốc gia bạn muốn đến để có sự chuẩn bị tốt nhất!</p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="../apply.html" class="apply-button">🚀 Đăng Ký Ngay</a>
+        <p style="margin-top: 20px; color: #888;">Hạn nộp hồ sơ: <strong style="color: #ff751f;">30/08/2026</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">Kết nối với chúng tôi</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank" rel="noopener noreferrer">
+          <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook
+        </a>
+        <a href="mailto:phatphamussh23@gmail.com">
+          <svg class="email-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
