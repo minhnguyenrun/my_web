@@ -17,19 +17,16 @@
       padding: 0;
       background-color: #ffffff;
       color: #333;
+      display: flex;
+      min-height: 100vh;
     }
 
     /* Top Bar */
     .top-header {
       background-color: var(--primary-dark);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 15px 40px;
       color: white;
       font-size: 14px;
-      position: relative;
-      z-index: 1000;
     }
 
     #current-page-name {
@@ -38,50 +35,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    /* Dropdown */
-    .dropdown {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .dropdown-label {
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background-color: var(--dropdown-bg);
-      min-width: 240px;
-      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
-      padding: 10px 0;
-      margin-top: 15px;
-    }
-
-    .dropdown-content a {
-      color: #bbbbbb;
-      padding: 15px 25px;
-      text-decoration: none;
-      display: block;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.2s;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #2a2a2a;
-      color: white;
-      padding-left: 30px;
-    }
-
-    .show { display: block; }
 
     /* Hero Section */
     .hero-section {
@@ -217,29 +170,30 @@
 </head>
 <body>
 
-  <header>
-    <div class="top-header">
-      <span id="current-page-name">TẠO HỌC BỔNG</span>
-      
-      <div class="dropdown">
-        <div class="dropdown-label" onclick="toggleMenu()">
-          Trang chủ <span style="font-size: 10px;">▼</span>
-        </div>
-        <div class="dropdown-content" id="myDropdown">
-          <a href="/index.html">Trang Chủ</a>
-          <a href="/about.html">Về Chúng Tôi</a>
-          <a href="/admin.html">Quản Lý</a>
-          <a href="/profiles.html">Hồ Sơ Học Bổng</a>
-        </div>
-      </div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
     </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Trang Chủ</a>
+      <a href="/about.html">Về Chúng Tôi</a>
+      <a href="/admin.html">Quản Lý</a>
+      <a href="/profiles.html">Hồ Sơ Học Bổng</a>
+    </nav>
+  </div>
 
-    <div class="hero-section">
-      <div class="logo-box">
-        <h1>SCHOLAR SHARE</h1>
+  <div class="main-wrapper">
+    <header>
+      <div class="top-header">
+        <span id="current-page-name">TẠO HỌC BỔNG</span>
       </div>
-    </div>
-  </header>
+
+      <div class="hero-section">
+        <div class="logo-box">
+          <h1>SCHOLAR SHARE</h1>
+        </div>
+      </div>
+    </header>
 
   <div class="container">
     <form id="scholarship-form">
@@ -324,6 +278,7 @@
             [{ 'size': ['small', false, 'large', 'huge'] }],
             ['bold', 'italic', 'underline', 'strike'],
             [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
             ['link', 'image'],
             ['clean']
@@ -359,7 +314,8 @@
           document.getElementById('summary').value = s.summary || '';
           document.getElementById('deadline').value = s.deadline || '';
           if (s.image) {
-            document.getElementById('image-preview').innerHTML = `<img src="${s.image}" style="max-width:200px;">`;
+            document.getElementById('image-preview').innerHTML = `<img src="/api/scholarship-image/${scholarshipId}" style="max-width:200px;">`;
+            document.getElementById('image').dataset.id = scholarshipId;
           }
 
           // Load sections
@@ -385,9 +341,16 @@
       if (type === 'image') {
         div.innerHTML = `
           <input type="file" class="section-file" accept="image/*" onchange="uploadImage(this)">
-          <div class="image-preview">${content ? `<img src="${content}" style="max-width:100%;">` : ''}</div>
+          <div class="image-preview">${content ? `<img src="/api/images/${content}" style="max-width:100%;">` : ''}</div>
           <button type="button" class="btn btn-secondary" onclick="removeSection(this)">Xóa Phần</button>
         `;
+        // Set dataset.id if content is number
+        if (content && !isNaN(content)) {
+          setTimeout(() => {
+            const fileEl = div.querySelector('.section-file');
+            fileEl.dataset.id = content;
+          }, 0);
+        }
       } else {
         div.innerHTML = `
           <div class="quill-container" style="height: 200px;"></div>
@@ -496,30 +459,52 @@
     }
 
     function applyImageScale() {
-      if (!canvas) return;
+      if (!canvas || !ctx) {
+        alert('Canvas not ready');
+        return;
+      }
       
-      // Get scaled image as blob
-      canvas.toBlob(function(blob) {
-        const scaledFile = new File([blob], currentImageFile.name, { type: currentImageFile.type });
-        
-        // Upload the scaled image
-        const formData = new FormData();
-        formData.append('image', scaledFile);
-        
-        fetch('/api/upload', {
-          method: 'POST',
-          body: formData
-        }).then(r => r.json()).then(data => {
-          if (data.url) {
-            const preview = currentImageInput.parentElement.querySelector('.image-preview');
-            if (preview) {
-              preview.innerHTML = `<img src="${data.url}" style="max-width:100%;">`;
-            }
-            currentImageInput.dataset.url = data.url;
-            closeImageScaleModal();
+      try {
+        // Get scaled image as blob
+        canvas.toBlob(function(blob) {
+          if (!blob) {
+            alert('Failed to create blob');
+            return;
           }
-        });
-      }, currentImageFile.type);
+          const scaledFile = new File([blob], currentImageFile.name, { type: currentImageFile.type });
+          
+          // Upload the scaled image
+          const formData = new FormData();
+          formData.append('image', scaledFile);
+          
+          fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+          }).then(r => {
+            if (!r.ok) {
+              throw new Error('Upload failed: ' + r.status);
+            }
+            return r.json();
+          }).then(data => {
+            if (data.id) {
+              const preview = currentImageInput.parentElement.querySelector('.image-preview');
+              if (preview) {
+                preview.innerHTML = `<img src="/api/images/${data.id}" style="max-width:100%;">`;
+              }
+              currentImageInput.dataset.id = data.id;
+              closeImageScaleModal();
+            } else {
+              alert('Upload failed: no id returned');
+            }
+          }).catch(err => {
+            console.error('Upload error:', err);
+            alert('Upload error: ' + err.message);
+          });
+        }, currentImageFile.type);
+      } catch (err) {
+        console.error('Scale error:', err);
+        alert('Scale error: ' + err.message);
+      }
     }
 
     function cancelImageScale() {
@@ -545,7 +530,7 @@
           return { type: 'text', content: quill ? quill.root.innerHTML : '' };
         } else {
           const fileEl = s.querySelector('.section-file');
-          return { type: 'image', content: fileEl.dataset.url || '' };
+          return { type: 'image', content: parseInt(fileEl.dataset.id) || '' };
         }
       });
 
@@ -554,7 +539,7 @@
         summary: document.getElementById('summary').value,
         sections: sections,
         deadline: document.getElementById('deadline').value,
-        image: document.getElementById('image').dataset.url || ''
+        image: parseInt(document.getElementById('image').dataset.id) || null
       };
 
       if (isEditMode) {
@@ -602,21 +587,8 @@
     function viewApplications() {
       window.location.href = '/applications/' + encodeURIComponent(scholarshipId);
     }
-
-    function toggleMenu() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropdown-label')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-          if (dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.remove('show');
-          }
-        }
-      }
-    }
   </script>
+  </div>
+
 </body>
 </html>

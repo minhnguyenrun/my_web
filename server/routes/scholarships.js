@@ -1,83 +1,24 @@
-import express from 'express';
-import pool from '../db.js';
-import path from 'path';
-import fs from 'fs';
-import ExcelJS from 'exceljs';
-
-const router = express.Router();
-
-async function attachSections(list) {
-  for (let s of list) {
-    try {
-      const sections = await pool.all(
-        'SELECT title, content, type FROM sections WHERE scholarship_id = ? ORDER BY order_index',
-        [s.id]
-      );
-      s.sections = sections;
-    } catch (err) {
-      console.error('Error fetching sections for', s.id, err);
-      s.sections = [];
-    }
-  }
-}
-
-async function moveTempImages(scholarshipId, sections) {
-  const scholarshipDir = path.join(process.cwd(), 'public/uploads', scholarshipId.toString());
-  if (!fs.existsSync(scholarshipDir)) fs.mkdirSync(scholarshipDir, { recursive: true });
-  let imageIndex = 1;
-  for (let i = 0; i < sections.length; i++) {
-    const section = sections[i];
-    if (section.type === 'image' && typeof section.content === 'string' && section.content.startsWith('/temp/')) {
-      const tempPath = path.join(process.cwd(), 'public', section.content);
-      const ext = path.extname(tempPath);
-      const newFilename = `images${imageIndex}${ext}`;
-      const newPath = path.join(scholarshipDir, newFilename);
-      if (fs.existsSync(tempPath)) {
-        fs.renameSync(tempPath, newPath);
-      }
-      const newUrl = `/uploads/${scholarshipId}/${newFilename}`;
-      await pool.run(
-        `UPDATE sections SET content = ? WHERE scholarship_id = ? AND order_index = ?`,
-        [newUrl, scholarshipId, i]
-      );
-      imageIndex++;
-    }
-  }
-}
-
-router.get('/api/scholarships', async (req, res) => {
-  try {
-    const r = await pool.all(
-      'SELECT id, title, summary, deadline, content, form, image FROM scholarships ORDER BY created_at DESC'
-    );
-    await attachSections(r);
-    res.json(r);
-  } catch (err) {
-    console.error('Error in /api/scholarships', err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get('/api/scholarships/:id', async (req, res) => {
-  try {
-    const s = await pool.get('SELECT * FROM scholarships WHERE id=?', [req.params.id]);
-    if (!s) return res.status(404).json({ error: 'Not found' });
-    const sections = await pool.all('SELECT title, content, type FROM sections WHERE scholarship_id = ? ORDER BY order_index', [req.params.id]);
-    s.sections = sections;
-    res.json(s);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
+x
 router.post('/api/admin/scholarships', async (req, res) => {
   try {
     const { title, summary, sections, deadline, image } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });
     const parsedDeadline = deadline ? new Date(deadline).toISOString().split('T')[0] : null;
+    
+    let imageData = null;
+    let imageMimetype = null;
+    if (image && typeof image === 'number') {
+      const tempImage = await pool.get('SELECT data, mimetype FROM temp_images WHERE id = ?', [image]);
+      if (tempImage) {
+        imageData = tempImage.data;
+        imageMimetype = tempImage.mimetype || null;
+        await pool.run('DELETE FROM temp_images WHERE id = ?', [image]);
+      }
+    }
+    
     const r = await pool.run(
-      `INSERT INTO scholarships(title,summary,deadline,image) VALUES(?,?,?,?)`,
-      [title, summary, parsedDeadline, image || null]
+      `INSERT INTO scholarships(title,summary,deadline,image,image_mimetype) VALUES(?,?,?,?,?)`,
+      [title, summary, parsedDeadline, imageData, imageMimetype]
     );
     const scholarshipId = r.lastID;
 
@@ -92,7 +33,7 @@ router.post('/api/admin/scholarships', async (req, res) => {
       await moveTempImages(scholarshipId, sections);
     }
 
-    res.json({ id: scholarshipId, title, summary, deadline: parsedDeadline, image });
+    res.json({ id: scholarshipId, title, summary, deadline: parsedDeadline, image: imageData ? scholarshipId : null });
   } catch (err) {
     console.error('Insert error:', err.message, err.stack);
     res.status(500).json({ error: err.message });
@@ -139,7 +80,36 @@ router.put('/api/admin/scholarships/:id', async (req, res) => {
     const { title, summary, sections, deadline, image } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });
     const parsedDeadline = deadline ? new Date(deadline).toISOString().split('T')[0] : null;
-    await pool.run('UPDATE scholarships SET title = ?, summary = ?, deadline = ?, image = ? WHERE id = ?', [title, summary, parsedDeadline, image || '', req.params.id]);
+
+    let shouldUpdateImage = false;
+    let imageData = null;
+    let imageMimetype = null;
+
+    if (image && typeof image === 'number') {
+      const tempImage = await pool.get('SELECT data, mimetype FROM temp_images WHERE id = ?', [image]);
+      if (tempImage) {
+        shouldUpdateImage = true;
+        imageData = tempImage.data;
+        imageMimetype = tempImage.mimetype || null;
+        await pool.run('DELETE FROM temp_images WHERE id = ?', [image]);
+      }
+    } else if (image === null) {
+      shouldUpdateImage = true;
+      imageData = null;
+      imageMimetype = null;
+    }
+
+    if (shouldUpdateImage) {
+      await pool.run(
+        'UPDATE scholarships SET title = ?, summary = ?, deadline = ?, image = ?, image_mimetype = ? WHERE id = ?',
+        [title, summary, parsedDeadline, imageData, imageMimetype, req.params.id]
+      );
+    } else {
+      await pool.run(
+        'UPDATE scholarships SET title = ?, summary = ?, deadline = ? WHERE id = ?',
+        [title, summary, parsedDeadline, req.params.id]
+      );
+    }
 
     await pool.run('DELETE FROM sections WHERE scholarship_id = ?', [req.params.id]);
 

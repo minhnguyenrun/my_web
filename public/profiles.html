@@ -17,19 +17,87 @@
       padding: 0;
       background-color: #ffffff;
       color: #333;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: var(--primary-dark);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .sidebar-header {
+      padding: 30px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 24px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 0;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      padding: 15px 25px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+      border-left-color: white;
+      padding-left: 30px;
+    }
+
+    /* Main Content Wrapper */
+    .main-wrapper {
+      margin-left: 250px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      flex-shrink: 0;
     }
 
     /* Top Bar */
     .top-header {
       background-color: var(--primary-dark);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 15px 40px;
       color: white;
       font-size: 14px;
-      position: relative;
-      z-index: 1000;
     }
 
     #current-page-name {
@@ -38,50 +106,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    /* Dropdown */
-    .dropdown {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .dropdown-label {
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background-color: var(--dropdown-bg);
-      min-width: 240px;
-      box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
-      padding: 10px 0;
-      margin-top: 15px;
-    }
-
-    .dropdown-content a {
-      color: #bbbbbb;
-      padding: 15px 25px;
-      text-decoration: none;
-      display: block;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.2s;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #2a2a2a;
-      color: white;
-      padding-left: 30px;
-    }
-
-    .show { display: block; }
 
     /* Hero Section */
     .hero-section {
@@ -112,6 +136,54 @@
       max-width: 1200px;
       margin: 40px auto;
       padding: 0 20px;
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+    }
+
+    footer {
+      background-color: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      margin: 20px 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .social-links a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .facebook-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+    }
+
+    .footer-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin: 10px 0;
     }
 
     .section {
@@ -131,56 +203,75 @@
 </head>
 <body>
 
-  <header>
-    <div class="top-header">
-      <span id="current-page-name">HỒ SƠ HỌC BỔNG</span>
-      
-      <div class="dropdown">
-        <div class="dropdown-label" onclick="toggleMenu()">
-          Trang chủ <span style="font-size: 10px;">▼</span>
-        </div>
-        <div class="dropdown-content" id="myDropdown">
-          <a href="/index.html">Trang Chủ</a>
-          <a href="/about.html">Về Chúng Tôi</a>
-          <a href="/admin.html">Quản Lý</a>
-          <a href="/profiles.html">Hồ Sơ Học Bổng</a>
-        </div>
-      </div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
     </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Trang Chủ</a>
+      <a href="/about.html">Về Chúng Tôi</a>
+      <a href="/admin.html">Quản Lý</a>
+      <a href="/profiles.html" class="active">Hồ Sơ Học Bổng</a>
+    </nav>
+  </div>
 
-    <div class="hero-section">
-      <div class="logo-box">
-        <h1>SCHOLAR SHARE</h1>
+  <div class="main-wrapper">
+    <header>
+      <div class="top-header">
+        <span id="current-page-name">HỒ SƠ HỌC BỔNG</span>
       </div>
-    </div>
-  </header>
+
+      <div class="hero-section">
+        <div class="logo-box">
+          <h1>SCHOLAR SHARE</h1>
+        </div>
+      </div>
+    </header>
 
   <div class="container">
-    <div class="section">
-      <h2>Thông Tin Hồ Sơ</h2>
-      <p>Trang này sẽ hiển thị thông tin chi tiết về hồ sơ học bổng. Nội dung sẽ được cập nhật sau.</p>
-    </div>
-    <div class="section">
-      <h2>Cập Nhật Sắp Tới</h2>
-      <p>Chúng tôi đang phát triển tính năng quản lý hồ sơ học bổng. Vui lòng quay lại sau để xem các cập nhật mới nhất.</p>
+    <div id="page-content">
+      <p>Đang tải...</p>
     </div>
   </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropdown-label')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-          if (dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.remove('show');
-          }
+    // Load page content
+    fetch('/api/pages/profiles')
+      .then(r => r.json())
+      .then(page => {
+        let contentHtml = '';
+        if (page.sections && page.sections.length > 0) {
+          page.sections.forEach(section => {
+            if (section.type === 'image') {
+              contentHtml += `<img src="/api/page-images/${section.id}" alt="Image" style="max-width:100%; display:block; margin:20px auto;">`;
+            } else {
+              contentHtml += `${section.content || ''}`;
+            }
+          });
+        } else {
+          contentHtml = '<p>Chưa có nội dung</p>';
         }
-      }
-    }
+        document.getElementById('page-content').innerHTML = contentHtml;
+      })
+      .catch(err => {
+        document.getElementById('page-content').innerHTML = '<p>Lỗi tải nội dung</p>';
+      });
   </script>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">Kết nối với chúng tôi</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank" rel="noopener noreferrer">
+          <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook
+        </a>
+      </div>
+    </div>
+  </footer>
+  </div>
+
 </body>
 </html>

@@ -18,11 +18,13 @@ import uploadsRouter from './routes/uploads.js';
 import scholarshipsRouter from './routes/scholarships.js';
 import applicationsRouter from './routes/applications.js';
 import pagesRouter from './routes/pages.js';
+import pageEditorRouter from './routes/page-editor.js';
 
 app.use(usersRouter);
 app.use(uploadsRouter);
 app.use(scholarshipsRouter);
 app.use(applicationsRouter);
 app.use(pagesRouter);
+app.use(pageEditorRouter);
 
 export default app;

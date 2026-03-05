@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS scholarships (
   deadline TEXT,
   content TEXT,
   form TEXT,
-  image TEXT,
+  image BLOB,
+  image_mimetype TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS sections (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   scholarship_id INTEGER,
   title TEXT,
-  content TEXT,
+  content BLOB,
+  mimetype TEXT,
   order_index INTEGER,
   type TEXT DEFAULT 'text',
   FOREIGN KEY (scholarship_id) REFERENCES scholarships(id) ON DELETE CASCADE
@@ -41,11 +43,41 @@ CREATE TABLE IF NOT EXISTS applications (
   data TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS temp_images (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  data BLOB,
+  filename TEXT,
+  mimetype TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS pages (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS page_sections (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  page_id TEXT,
+  title TEXT,
+  content BLOB,
+  mimetype TEXT,
+  order_index INTEGER,
+  type TEXT DEFAULT 'text',
+  FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
+);
 `);
 
 console.log('Tables created');
 
-await db.exec(`ALTER TABLE scholarships ADD COLUMN image TEXT`).catch(() => {}); // Ignore if column exists
+// Insert default pages
+await db.run(`INSERT OR IGNORE INTO pages (id, title, content) VALUES (?, ?, ?)`, ['about', 'Về Chúng Tôi', '']);
+await db.run(`INSERT OR IGNORE INTO pages (id, title, content) VALUES (?, ?, ?)`, ['profiles', 'Hồ Sơ Học Bổng', '']);
+
+await db.exec(`ALTER TABLE scholarships ADD COLUMN image_mimetype TEXT`).catch(() => {}); // Ignore if column exists
 
 // Insert sample data
 // await db.run(`INSERT INTO scholarships (title, summary, deadline) VALUES (?, ?, ?)`, ['Học bổng A', 'Mô tả A', '2026-12-31']);

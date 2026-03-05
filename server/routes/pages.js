@@ -16,7 +16,7 @@ router.get('/detail/:id', async (req, res) => {
     if (s.sections && s.sections.length > 0) {
       s.sections.forEach(section => {
         if (section.type === 'image') {
-          contentHtml += `<img src="${section.content}" alt="Scholarship image" style="max-width:100%; display:block; margin:20px 0;"><br>`;
+          contentHtml += `<img src="/api/images/${section.id}" alt="Scholarship image" style="max-width:100%; display:block; margin:20px auto;"><br>`;
         } else {
           contentHtml += `<div style="margin:20px 0; line-height:1.6;">${section.content || ''}</div>`;
         }

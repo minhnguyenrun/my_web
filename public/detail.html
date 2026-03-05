@@ -149,19 +149,24 @@
         // Render content as sections
         let contentHtml = '';
         try {
-          const sections = JSON.parse(s.content || '[]');
+          const sections = s.sections || [];
           if (sections.length === 0) {
             contentHtml = '<div class="section"><p>Chưa có nội dung</p></div>';
           } else {
             sections.forEach(section => {
-              contentHtml += `<div class="section">
-                <h2>${section.title || 'Mục'}</h2>
-                <p>${section.text || ''}</p>
-              </div>`;
+              if (section.type === 'image') {
+                contentHtml += `<div class="section">
+                  <img src="/api/images/${section.content}" style="max-width:100%;">
+                </div>`;
+              } else {
+                contentHtml += `<div class="section">
+                  <div>${section.content || ''}</div>
+                </div>`;
+              }
             });
           }
         } catch (e) {
-          console.error('Parse content error:', e);
+          console.error('Parse sections error:', e);
           contentHtml = `<div class="section"><p>${s.content || 'Chưa có nội dung'}</p></div>`;
         }
         document.getElementById("content").innerHTML = contentHtml;
