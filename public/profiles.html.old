@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholar Share - Hồ Sơ Học Bổng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      --dark-gradient: linear-gradient(135deg, #3a6073 0%, #16222a 100%);
+      --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --accent-gradient: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+      --teal-gradient: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      --green-dark: #3a6073;
+      --green-light: #89f7fe;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #2d3748;
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    html {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(17, 153, 142, 0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes glow {
+      0%, 100% { 
+        text-shadow: 0 0 20px rgba(17, 153, 142, 0.5), 
+                     0 0 30px rgba(17, 153, 142, 0.3); 
+      }
+      50% { 
+        text-shadow: 0 0 30px rgba(56, 239, 125, 0.8), 
+                     0 0 40px rgba(56, 239, 125, 0.5),
+                     0 0 50px rgba(56, 239, 125, 0.3); 
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes titleShine {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                     0 0 30px rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--dark-gradient);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.03)"/></svg>');
+      background-size: 50px 50px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 40px 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 900;
+      animation: glow 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 30px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 18px 30px;
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 4px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-nav a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: rgba(255, 255, 255, 0.1);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    .sidebar-nav a:hover::before,
+    .sidebar-nav a.active::before {
+      width: 100%;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      color: white;
+      border-left-color: var(--green-light);
+      padding-left: 35px;
+      text-shadow: 0 0 10px rgba(20, 255, 236, 0.5);
+    }
+
+    /* Main Content Wrapper */
+    .main-wrapper {
+      margin-left: 280px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      flex-shrink: 0;
+    }
+
+    /* Top Bar */
+    .top-header {
+      background: var(--dark-gradient);
+      padding: 20px 50px;
+      color: white;
+      font-size: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    #current-page-name {
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: var(--primary-gradient);
+      height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 40s linear infinite;
+    }
+
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 150px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+      pointer-events: none;
+    }
+
+    .logo-box {
+      border: 4px solid white;
+      padding: 30px 80px;
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 -2px 10px rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    .logo-box:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        inset 0 -2px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .logo-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 60px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-weight: 900;
+      animation: titleShine 5s ease-in-out infinite;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 50px;
+      flex: 1;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-gradient);
+      color: white;
+      text-align: center;
+      padding: 50px 30px;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.02)"/></svg>');
+      background-size: 80px 80px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      margin: 25px 0;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .facebook-icon {
+      width: 28px;
+      height: 28px;
+      display: inline-block;
+    }
+
+    .footer-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin: 15px 0;
+      letter-spacing: 0.5px;
+    }
+
+    /* Intro Section */
+    .intro-section {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 60px 50px;
+      border-radius: 25px;
+      margin-bottom: 40px;
+      text-align: center;
+      box-shadow: 
+        0 20px 60px rgba(17, 153, 142, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .intro-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 40s linear infinite;
+    }
+
+    .intro-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      margin: 0 0 25px 0;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+      animation: titleShine 5s ease-in-out infinite;
+    }
+
+    .intro-section p {
+      font-size: 20px;
+      line-height: 1.8;
+      margin: 15px 0;
+      position: relative;
+      z-index: 1;
+      font-weight: 400;
+    }
+
+    /* Content Section */
+    .content-section {
+      background: white;
+      padding: 45px 40px;
+      border-radius: 20px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background: var(--primary-gradient);
+      transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .content-section:hover::before {
+      height: 100%;
+    }
+
+    .content-section:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        0 20px 50px rgba(17, 153, 142, 0.2),
+        0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .content-section h2 {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 25px 0;
+      padding-bottom: 15px;
+      border-bottom: 3px solid transparent;
+      border-image: var(--primary-gradient) 1;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .content-section h3 {
+      color: var(--green-dark);
+      font-size: 26px;
+      margin-top: 35px;
+      font-weight: 600;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .content-section h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 30px;
+      background: var(--primary-gradient);
+      border-radius: 3px;
+    }
+
+    .content-section p {
+      line-height: 1.9;
+      color: #4a5568;
+      font-size: 17px;
+      margin: 20px 0;
+      font-weight: 400;
+    }
+
+    .content-section ul {
+      line-height: 1.9;
+      color: #4a5568;
+      padding-left: 25px;
+    }
+
+    .content-section ul li {
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 10px;
+    }
+
+    .content-section ul li::marker {
+      color: var(--green-dark);
+      font-weight: bold;
+    }
+
+    .content-section ol {
+      line-height: 1.9;
+      color: #4a5568;
+      padding-left: 25px;
+      counter-reset: item;
+    }
+
+    .content-section ol li {
+      margin-bottom: 20px;
+      counter-increment: item;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .content-section ol li::marker {
+      color: var(--green-dark);
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* Checklist Box */
+    .checklist {
+      background: linear-gradient(135deg, #e6f7f5 0%, #d4f1ed 100%);
+      padding: 30px;
+      border-left: 5px solid var(--green-dark);
+      border-radius: 15px;
+      margin: 30px 0;
+      box-shadow: 0 8px 20px rgba(17, 153, 142, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .checklist:hover {
+      transform: translateX(5px);
+      box-shadow: 0 12px 30px rgba(17, 153, 142, 0.25);
+    }
+
+    .checklist h4 {
+      color: var(--green-dark);
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .checklist ul {
+      margin: 0;
+      padding-left: 25px;
+    }
+
+    .checklist ul li {
+      color: #2d3748;
+      font-weight: 500;
+    }
+
+    /* Tip Box */
+    .tip-box {
+      background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+      border-left: 5px solid #ffc107;
+      padding: 25px 30px;
+      margin: 30px 0;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .tip-box:hover {
+      transform: translateX(5px);
+      box-shadow: 0 12px 30px rgba(255, 193, 7, 0.3);
+    }
+
+    .tip-box strong {
+      color: #856404;
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .tip-box p {
+      color: #664d03;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Warning Box */
+    .warning-box {
+      background: linear-gradient(135deg, #ffe6e9 0%, #f8d7da 100%);
+      border-left: 5px solid #dc3545;
+      padding: 25px 30px;
+      margin: 30px 0;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .warning-box:hover {
+      transform: translateX(5px);
+      box-shadow: 0 12px 30px rgba(220, 53, 69, 0.3);
+    }
+
+    .warning-box strong {
+      color: #721c24;
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .warning-box p {
+      color: #721c24;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Success Box */
+    .success-box {
+      background: linear-gradient(135deg, #e6f7ed 0%, #d4edda 100%);
+      border-left: 5px solid #28a745;
+      padding: 25px 30px;
+      margin: 30px 0;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .success-box:hover {
+      transform: translateX(5px);
+      box-shadow: 0 12px 30px rgba(40, 167, 69, 0.3);
+    }
+
+    .success-box strong {
+      color: #155724;
+      font-size: 18px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .success-box p {
+      color: #155724;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 220px;
+      }
+
+      .main-wrapper {
+        margin-left: 220px;
+      }
+
+      .logo-box {
+        padding: 20px 40px;
+      }
+
+      .logo-box h1 {
+        font-size: 40px;
+        letter-spacing: 3px;
+      }
+
+      .container {
+        padding: 0 25px;
+        margin: 30px auto;
+      }
+
+      .intro-section {
+        padding: 40px 30px;
+      }
+
+      .intro-section h2 {
+        font-size: 36px;
+      }
+
+      .content-section {
+        padding: 30px 25px;
+      }
+
+      .content-section h2 {
+        font-size: 28px;
+      }
+
+      .content-section h3 {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+
+      .hero-section {
+        height: 250px;
+      }
+
+      .logo-box h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Trang Chủ</a>
+      <a href="/about.html">Về Chúng Tôi</a>
+      <a href="/profiles.html" class="active">Hồ Sơ Học Bổng</a>
+    </nav>
+  </div>
+
+  <div class="main-wrapper">
+    <header>
+      <div class="top-header">
+        <span id="current-page-name">HỒ SƠ HỌC BỔNG</span>
+      </div>
+
+      <div class="hero-section">
+        <div class="logo-box">
+          <h1>SCHOLAR SHARE</h1>
+        </div>
+      </div>
+    </header>
+
+  <div class="container">
+    <!-- Intro Section -->
+    <div class="intro-section">
+      <h2>Hướng Dẫn Chuẩn Bị Hồ Sơ Học Bổng</h2>
+      <p>Hồ sơ học bổng xuất sắc là chìa khóa để bạn tiếp cận cơ hội học tập mơ ước.</p>
+      <p>Hãy cùng Scholar Share tìm hiểu cách chuẩn bị hồ sơ chuyên nghiệp và ấn tượng!</p>
+    </div>
+
+    <!-- General Guidelines -->
+    <div class="content-section">
+      <h2>📋 Nguyên Tắc Chung</h2>
+      <p>Khi chuẩn bị hồ sơ học bổng, bạn cần lưu ý những điểm sau:</p>
+      <ul>
+        <li><strong>Bắt đầu sớm:</strong> Chuẩn bị hồ sơ cần thời gian, đừng để đến phút chót</li>
+        <li><strong>Đọc kỹ yêu cầu:</strong> Mỗi học bổng có yêu cầu riêng, đảm bảo bạn nắm rõ tất cả</li>
+        <li><strong>Trung thực:</strong> Không bao giờ làm giả hay phóng đại thông tin</li>
+        <li><strong>Chính xác:</strong> Kiểm tra kỹ thông tin, không có lỗi chính tả hay ngữ pháp</li>
+        <li><strong>Hoàn chỉnh:</strong> Đảm bảo không thiếu bất kỳ giấy tờ nào trong danh sách yêu cầu</li>
+        <li><strong>Chuyên nghiệp:</strong> Trình bày gọn gàng, rõ ràng, dễ đọc</li>
+      </ul>
+    </div>
+
+    <!-- Basic Documents -->
+    <div class="content-section">
+      <h2>📄 Hồ Sơ Cơ Bản</h2>
+      <p>Hầu hết các học bổng đều yêu cầu những loại giấy tờ sau:</p>
+
+      <h3>1. Đơn Xin Học Bổng</h3>
+      <ul>
+        <li>Viết theo mẫu của tổ chức cung cấp học bổng (nếu có)</li>
+        <li>Trình bày rõ ràng lý do xin học bổng và kế hoạch học tập</li>
+        <li>Ký tên và ghi đầy đủ thông tin cá nhân</li>
+      </ul>
+
+      <h3>2. Sơ Yếu Lý Lịch (CV)</h3>
+      <ul>
+        <li>Thông tin cá nhân: Họ tên, ngày sinh, địa chỉ, liên lạc</li>
+        <li>Học vấn: Trường học, bằng cấp, điểm số</li>
+        <li>Kinh nghiệm: Thực tập, làm việc part-time, tình nguyện</li>
+        <li>Kỹ năng: Ngoại ngữ, tin học, kỹ năng mềm</li>
+        <li>Thành tích: Giải thưởng, chứng chỉ</li>
+        <li>Sở thích và hoạt động ngoại khóa</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>💡 Mẹo:</strong> CV nên ngắn gọn (1-2 trang), tập trung vào những điểm nổi bật và liên quan đến học bổng.
+      </div>
+
+      <h3>3. Bảng Điểm</h3>
+      <ul>
+        <li>Bản sao bảng điểm THPT hoặc đại học (tùy yêu cầu)</li>
+        <li>Công chứng nếu cần thiết</li>
+        <li>Dịch sang tiếng Anh nếu học bổng quốc tế</li>
+      </ul>
+
+      <h3>4. Bằng Cấp / Chứng Chỉ</h3>
+      <ul>
+        <li>Bằng tốt nghiệp (nếu đã có)</li>
+        <li>Chứng chỉ ngoại ngữ (IELTS, TOEFL, TOEIC)</li>
+        <li>Chứng chỉ tin học, kỹ năng khác</li>
+        <li>Giấy chứng nhận giải thưởng</li>
+      </ul>
+
+      <h3>5. Giấy Tờ Tùy Thân</h3>
+      <ul>
+        <li>Bản sao CMND/CCCD</li>
+        <li>Bản sao hộ khẩu (một số trường hợp)</li>
+        <li>Ảnh 3x4 hoặc 4x6 (theo yêu cầu)</li>
+      </ul>
+    </div>
+
+    <!-- Essay Section -->
+    <div class="content-section">
+      <h2>✍️ Bài Luận Cá Nhân (Personal Statement/Essay)</h2>
+      <p>Đây là phần quan trọng nhất để bạn thể hiện bản thân và thuyết phục hội đồng tuyển chọn.</p>
+
+      <h3>Cấu trúc bài luận:</h3>
+      <ol>
+        <li><strong>Mở bài:</strong> Giới thiệu bản thân và thu hút sự chú ý của người đọc</li>
+        <li><strong>Thân bài:</strong>
+          <ul>
+            <li>Nền tảng học vấn và thành tích</li>
+            <li>Động lực học tập và ước mơ nghề nghiệp</li>
+            <li>Lý do cần học bổng này</li>
+            <li>Kế hoạch sử dụng học bổng như thế nào</li>
+            <li>Đóng góp cho xã hội sau khi hoàn thành chương trình</li>
+          </ul>
+        </li>
+        <li><strong>Kết bài:</strong> Khẳng định lại mong muốn và cảm ơn</li>
+      </ol>
+
+      <div class="checklist">
+        <h4>✅ Checklist cho bài luận tốt:</h4>
+        <ul>
+          <li>☐ Độ dài phù hợp (theo yêu cầu, thường 500-1500 từ)</li>
+          <li>☐ Câu chuyện cá nhân chân thực và cảm động</li>
+          <li>☐ Thể hiện rõ động lực và đam mê</li>
+          <li>☐ Liên kết với mục tiêu học bổng</li>
+          <li>☐ Không có lỗi chính tả, ngữ pháp</li>
+          <li>☐ Được ít nhất 2-3 người đọc và góp ý</li>
+          <li>☐ Nội dung độc đáo, không sao chép</li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 Mẹo viết bài luận hay:</strong>
+        <ul>
+          <li>Kể câu chuyện cụ thể thay vì nói chung chung</li>
+          <li>Thể hiện bản thân độc đáo, không cố gắng trở thành người khác</li>
+          <li>Tập trung vào cách bạn đã vượt qua khó khăn</li>
+          <li>Cho người đọc thấy sự phát triển của bạn</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Recommendation Letters -->
+    <div class="content-section">
+      <h2>💌 Thư Giới Thiệu (Recommendation Letters)</h2>
+      <p>Thư giới thiệu từ giáo viên, giảng viên hoặc người quản lý giúp xác thực năng lực của bạn.</p>
+
+      <h3>Ai nên viết thư giới thiệu?</h3>
+      <ul>
+        <li>Giáo viên, giảng viên dạy bạn và hiểu rõ năng lực học tập</li>
+        <li>Người quản lý nơi bạn thực tập hoặc làm việc</li>
+        <li>Người hướng dẫn dự án, nghiên cứu khoa học</li>
+        <li>Người phụ trách hoạt động xã hội, tình nguyện</li>
+      </ul>
+
+      <h3>Thông tin cần có trong thư:</h3>
+      <ul>
+        <li>Mối quan hệ giữa người viết và bạn</li>
+        <li>Thời gian quen biết</li>
+        <li>Đánh giá về năng lực học tập, kỹ năng</li>
+        <li>Những thành tích, đóng góp nổi bật</li>
+        <li>Tính cách, thái độ làm việc</li>
+        <li>Khuyến nghị và lý do</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>💡 Cách xin thư giới thiệu:</strong>
+        <ul>
+          <li>Xin trước ít nhất 2-4 tuần</li>
+          <li>Giải thích rõ về học bổng và lý do chọn họ</li>
+          <li>Cung cấp CV, bài luận để họ tham khảo</li>
+          <li>Gửi email nhắc nhở lịch sự trước deadline</li>
+          <li>Cảm ơn chân thành sau khi nhận được thư</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Special Documents -->
+    <div class="content-section">
+      <h2>📎 Hồ Sơ Đặc Biệt</h2>
+      <p>Tùy vào từng học bổng, bạn có thể cần chuẩn bị thêm:</p>
+
+      <h3>1. Portfolio (Hồ sơ năng lực)</h3>
+      <ul>
+        <li>Dành cho học bổng nghệ thuật, thiết kế, kiến trúc</li>
+        <li>Bao gồm các tác phẩm đại diện cho kỹ năng của bạn</li>
+        <li>Được trình bày chuyên nghiệp</li>
+      </ul>
+
+      <h3>2. Research Proposal (Đề xuất nghiên cứu)</h3>
+      <ul>
+        <li>Dành cho học bổng sau đại học, nghiên cứu khoa học</li>
+        <li>Trình bày rõ ràng vấn đề nghiên cứu, phương pháp, kế hoạch</li>
+        <li>Có tham khảo tài liệu khoa học</li>
+      </ul>
+
+      <h3>3. Video Giới Thiệu</h3>
+      <ul>
+        <li>Một số học bổng yêu cầu video 2-5 phút</li>
+        <li>Nội dung: Giới thiệu bản thân, động lực, kế hoạch</li>
+        <li>Quay rõ ràng, âm thanh tốt, trang phục lịch sự</li>
+      </ul>
+
+      <h3>4. Giấy Xác Nhận Hoàn Cảnh</h3>
+      <ul>
+        <li>Dành cho học bổng ưu tiên hoàn cảnh khó khăn</li>
+        <li>Xác nhận từ UBND phường/xã</li>
+        <li>Giấy tờ chứng minh thu nhập gia đình</li>
+      </ul>
+    </div>
+
+    <!-- Timeline Section -->
+    <div class="content-section">
+      <h2>⏰ Lịch Trình Chuẩn Bị</h2>
+      <p>Để chuẩn bị hồ sơ hoàn chỉnh, bạn nên bắt đầu trước deadline ít nhất 2-3 tháng:</p>
+
+      <h3>3 tháng trước deadline:</h3>
+      <ul>
+        <li>Research các học bổng phù hợp</li>
+        <li>Đọc kỹ yêu cầu và chuẩn bị danh sách cần làm</li>
+        <li>Bắt đầu viết bài luận cá nhân</li>
+      </ul>
+
+      <h3>2 tháng trước deadline:</h3>
+      <ul>
+        <li>Xin thư giới thiệu</li>
+        <li>Hoàn thiện bài luận và cho người khác đọc góp ý</li>
+        <li>Chuẩn bị các giấy tờ cần công chứng, dịch thuật</li>
+      </ul>
+
+      <h3>1 tháng trước deadline:</h3>
+      <ul>
+        <li>Hoàn tất tất cả tài liệu</li>
+        <li>Kiểm tra lại toàn bộ hồ sơ</li>
+        <li>Chuẩn bị cho phỏng vấn (nếu có)</li>
+      </ul>
+
+      <h3>1 tuần trước deadline:</h3>
+      <ul>
+        <li>Nộp hồ sơ</li>
+        <li>Lưu backup tất cả tài liệu</li>
+        <li>Theo dõi email để nhận thông báo</li>
+      </ul>
+
+      <div class="warning-box">
+        <strong>⚠️ Lưu ý:</strong> Đừng bao giờ nộp hồ sơ vào phút chót! Hệ thống có thể gặp lỗi hoặc bạn có thể phát hiện thiếu sót.
+      </div>
+    </div>
+
+    <!-- Common Mistakes -->
+    <div class="content-section">
+      <h2>❌ Những Lỗi Thường Gặp Cần Tránh</h2>
+      <ul>
+        <li><strong>Không đọc kỹ yêu cầu:</strong> Thiếu giấy tờ hoặc không theo đúng format</li>
+        <li><strong>Bài luận chung chung:</strong> Không thể hiện được cá tính và động lực thực sự</li>
+        <li><strong>Lỗi chính tả, ngữ pháp:</strong> Cho thấy sự thiếu cẩn thận</li>
+        <li><strong>CV quá dài:</strong> Người đọc không có thời gian đọc CV 5-10 trang</li>
+        <li><strong>Ảnh không chuyên nghiệp:</strong> Ảnh selfie, ảnh đi chơi</li>
+        <li><strong>Không backup:</strong> Mất file vào phút chót</li>
+        <li><strong>Nộp muộn:</strong> Hết hạn là không được xem xét</li>
+        <li><strong>Thư giới thiệu chung chung:</strong> Xin người không hiểu rõ bạn viết</li>
+      </ul>
+    </div>
+
+    <!-- Tips for Success -->
+    <div class="content-section">
+      <h2>🌟 Bí Quyết Thành Công</h2>
+      
+      <div class="success-box">
+        <strong>✅ Làm cho hồ sơ của bạn nổi bật:</strong>
+        <ul>
+          <li><strong>Câu chuyện độc đáo:</strong> Chia sẻ trải nghiệm cá nhân chân thực</li>
+          <li><strong>Thành tích cụ thể:</strong> Dùng số liệu, ví dụ minh họa</li>
+          <li><strong>Đam mê rõ ràng:</strong> Cho người đọc thấy bạn yêu thích điều mình làm</li>
+          <li><strong>Tầm nhìn dài hạn:</strong> Có kế hoạch rõ ràng cho tương lai</li>
+          <li><strong>Trình bày chuyên nghiệp:</strong> Gọn gàng, dễ đọc, có cấu trúc</li>
+        </ul>
+      </div>
+
+      <h3>Mindset đúng đắn:</h3>
+      <ul>
+        <li>Không ngại thất bại - mỗi lần nộp hồ sơ là một lần học hỏi</li>
+        <li>Nộp nhiều học bổng - đừng chỉ đặt cược vào một</li>
+        <li>Tự tin nhưng khiêm tốn</li>
+        <li>Kiên trì và không bỏ cuộc</li>
+      </ul>
+
+      <h3>Nguồn hỗ trợ:</h3>
+      <ul>
+        <li>Văn phòng hỗ trợ sinh viên của trường</li>
+        <li>Cựu sinh viên nhận học bổng</li>
+        <li>Cộng đồng Scholar Share</li>
+        <li>Các group, forum về học bổng</li>
+      </ul>
+    </div>
+
+    <!-- Final Note -->
+    <div class="content-section">
+      <h2>💪 Lời Kết</h2>
+      <p>Chuẩn bị hồ sơ học bổng là một quá trình đầy thử thách nhưng cũng rất bổ ích. Nó không chỉ giúp bạn có cơ hội nhận học bổng mà còn giúp bạn hiểu rõ hơn về bản thân, mục tiêu và định hướng tương lai.</p>
+      <p>Hãy bắt đầu từ hôm nay, chuẩn bị kỹ lưỡng và tự tin theo đuổi ước mơ của mình!</p>
+      <p style="text-align: center; margin-top: 30px; font-size: 18px; color: #11998e;">
+        <strong>Chúc bạn thành công với hồ sơ học bổng! 🎓</strong>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">Kết nối với chúng tôi</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank" rel="noopener noreferrer">
+          <svg class="facebook-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook
+        </a>
+      </div>
+    </div>
+  </footer>
+  </div>
+
+</body>
+</html>
