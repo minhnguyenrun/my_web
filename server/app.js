@@ -10,21 +10,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Mount routers
-import usersRouter from './routes/users.js';
-import uploadsRouter from './routes/uploads.js';
-import scholarshipsRouter from './routes/scholarships.js';
-import applicationsRouter from './routes/applications.js';
-import pagesRouter from './routes/pages.js';
-import pageEditorRouter from './routes/page-editor.js';
+// Serve scholarship HTML files
+app.get('/scholarships/:filename', (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/scholarships", req.params.filename));
+});
 
-app.use(usersRouter);
-app.use(uploadsRouter);
-app.use(scholarshipsRouter);
-app.use(applicationsRouter);
-app.use(pagesRouter);
-app.use(pageEditorRouter);
+// Fallback route for SPA
+app.get('*', (req, res) => {
+  if (req.path.endsWith('.html') || req.path.endsWith('.css') || req.path.endsWith('.js')) {
+    res.status(404).send('File not found');
+  } else {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  }
+});
 
 export default app;

@@ -250,7 +250,6 @@
     <nav class="sidebar-nav">
       <a href="/index.html" class="active">Trang Chủ</a>
       <a href="/about.html">Về Chúng Tôi</a>
-      <a href="/admin.html">Quản Lý</a>
       <a href="/profiles.html">Hồ Sơ Học Bổng</a>
     </nav>
   </div>
@@ -270,7 +269,27 @@
 
   <div class="container">
     <h2>Danh Sách Học Bổng</h2>
-    <div id="list" class="scholarships-grid"></div>
+    <div id="list" class="scholarships-grid">
+      <!-- Học bổng STEM -->
+      <div class="scholarship" onclick="window.location.href='/scholarships/hoc-bong-stem.html'">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&h=400&fit=crop" alt="Học Bổng STEM 2026">
+        <div class="content">
+          <h3>Học Bổng STEM 2026</h3>
+          <p>Hỗ trợ sinh viên theo đuổi ngành Khoa học, Công nghệ, Kỹ thuật và Toán học</p>
+          <small>Deadline: 30/06/2026</small>
+        </div>
+      </div>
+
+      <!-- Học bổng Kinh tế -->
+      <div class="scholarship" onclick="window.location.href='/scholarships/hoc-bong-kinh-te.html'">
+        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop" alt="Học Bổng Kinh Tế Xuất Sắc">
+        <div class="content">
+          <h3>Học Bổng Kinh Tế Xuất Sắc</h3>
+          <p>Đào tạo thế hệ lãnh đạo kinh tế tương lai</p>
+          <small>Deadline: 15/07/2026</small>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -288,31 +307,6 @@
         }
       }
     }
-
-    fetch("/api/scholarships")
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById("list").innerHTML =
-          data.map(s => {
-            let imageUrl = s.image ? `/api/scholarship-image/${s.id}` : '/api/images/default';
-            let description = s.summary || "";
-            if (s.sections && s.sections.length > 0) {
-              const firstSection = s.sections[0];
-              if (firstSection.type === 'text') {
-                // Strip HTML tags for description
-                description = firstSection.content.replace(/<[^>]*>/g, '').substring(0, 100) + (firstSection.content.replace(/<[^>]*>/g, '').length > 100 ? '...' : '');
-              }
-            }
-            return `<div class="scholarship" onclick="window.location.href='/detail/${s.id}'">
-              <img src="${imageUrl}" alt="${s.title}">
-              <div class="content">
-                <h3>${s.title}</h3>
-                <p>${description}</p>
-                <small>Deadline: ${s.deadline || "N/A"}</small>
-              </div>
-            </div>`;
-          }).join("");
-      });
   </script>
 
   <footer>

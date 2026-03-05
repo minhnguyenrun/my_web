@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Bổng Kinh Tế Xuất Sắc - Scholar Share</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #1a2533; 
+      --dropdown-bg: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: var(--primary-dark);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .sidebar-header {
+      padding: 30px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+
+    .sidebar-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 24px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 0;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      padding: 15px 25px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+      border-left-color: white;
+      padding-left: 30px;
+    }
+
+    /* Main Content Wrapper */
+    .main-wrapper {
+      margin-left: 250px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Bar */
+    .top-header {
+      background-color: var(--primary-dark);
+      padding: 15px 40px;
+      color: white;
+      font-size: 14px;
+    }
+
+    #current-page-name {
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background-color: var(--primary-dark);
+      height: 280px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo-box {
+      border: 3px solid white;
+      padding: 20px 60px;
+    }
+
+    .logo-box h1 {
+      font-family: 'Playfair Display', serif;
+      color: white;
+      font-size: 50px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* Nội dung chính */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Scholarship Details */
+    .scholarship-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 10px;
+      color: white;
+    }
+
+    .scholarship-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      margin: 0 0 15px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .scholarship-header .deadline {
+      font-size: 18px;
+      background-color: rgba(255,255,255,0.2);
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .scholarship-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .scholarship-summary {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-left: 4px solid #f5576c;
+      margin-bottom: 30px;
+      border-radius: 5px;
+    }
+
+    .scholarship-summary h3 {
+      color: #f5576c;
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .scholarship-section {
+      margin-bottom: 40px;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .scholarship-section h2 {
+      color: var(--primary-dark);
+      border-bottom: 2px solid #f5576c;
+      padding-bottom: 10px;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .scholarship-section h3 {
+      color: #f5576c;
+      margin-top: 25px;
+      font-size: 22px;
+    }
+
+    .scholarship-section ul {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .scholarship-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .scholarship-section p {
+      line-height: 1.8;
+      color: #555;
+      font-size: 16px;
+    }
+
+    .apply-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 15px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .apply-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: auto;
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+      .main-wrapper {
+        margin-left: 200px;
+      }
+      .scholarship-header h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>SCHOLAR<br>SHARE</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/">Trang Chủ</a>
+      <a href="/about.html">Giới Thiệu</a>
+      <a href="/profiles.html">Hồ Sơ</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <!-- Top Bar -->
+    <div class="top-header">
+      <span id="current-page-name">Chi Tiết Học Bổng</span>
+    </div>
+
+    <!-- Hero Section -->
+    <header>
+      <div class="hero-section">
+        <div class="logo-box">
+          <h1>SCHOLAR SHARE</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Scholarship Header -->
+      <div class="scholarship-header">
+        <h1>Học Bổng Kinh Tế Xuất Sắc</h1>
+        <p style="font-size: 20px; margin: 10px 0;">Đào tạo thế hệ lãnh đạo kinh tế tương lai</p>
+        <div class="deadline">
+          ⏰ Hạn nộp: 15/07/2026
+        </div>
+      </div>
+
+      <!-- Scholarship Image -->
+      <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=400&fit=crop" 
+           alt="Học Bổng Kinh Tế" 
+           class="scholarship-image">
+
+      <!-- Summary -->
+      <div class="scholarship-summary">
+        <h3>📋 Tóm tắt</h3>
+        <p>Học bổng Kinh Tế Xuất Sắc là chương trình đào tạo và hỗ trợ tài chính dành cho sinh viên ưu tú có khả năng lãnh đạo và tư duy kinh tế sắc bén. Chương trình không chỉ hỗ trợ học phí mà còn cung cấp cơ hội thực tập tại các tập đoàn kinh tế hàng đầu.</p>
+      </div>
+
+      <!-- Section: Giá trị học bổng -->
+      <div class="scholarship-section">
+        <h2>💰 Giá Trị Học Bổng</h2>
+        <ul>
+          <li><strong>Học bổng toàn phần:</strong> 100% học phí + 8,000,000 VNĐ/tháng (5 suất)</li>
+          <li><strong>Học bổng một phần:</strong> 70% học phí + 4,000,000 VNĐ/tháng (15 suất)</li>
+          <li><strong>Thời gian:</strong> Toàn bộ chương trình đại học hoặc sau đại học</li>
+          <li><strong>Hỗ trợ thêm:</strong> Khóa học ngoại ngữ, chứng chỉ quốc tế, cơ hội study tour</li>
+        </ul>
+      </div>
+
+      <!-- Section: Điều kiện -->
+      <div class="scholarship-section">
+        <h2>✅ Điều Kiện Ứng Tuyển</h2>
+        
+        <h3>Yêu cầu chung:</h3>
+        <ul>
+          <li>Là sinh viên năm 2-3 hoặc học sinh tốt nghiệp THPT định hướng ngành Kinh tế</li>
+          <li>Điểm trung bình tích lũy từ 3.2/4.0 trở lên</li>
+          <li>Có năng lực ngoại ngữ tốt (IELTS 6.5+ hoặc tương đương)</li>
+          <li>Có tinh thần lãnh đạo, khả năng làm việc nhóm xuất sắc</li>
+          <li>Có dự án hoặc hoạt động nổi bật trong lĩnh vực kinh tế/kinh doanh</li>
+        </ul>
+
+        <h3>Hồ sơ yêu cầu:</h3>
+        <ul>
+          <li>Đơn xin học bổng (theo mẫu)</li>
+          <li>Bảng điểm đại học/THPT được công chứng</li>
+          <li>Chứng chỉ ngoại ngữ (IELTS, TOEFL, TOEIC)</li>
+          <li>CV cá nhân (tiếng Việt và tiếng Anh)</li>
+          <li>Thư giới thiệu từ giảng viên hoặc người quản lý (02 thư)</li>
+          <li>Bài luận (1000-1500 từ) về "Tầm nhìn của tôi trong lĩnh vực kinh tế"</li>
+          <li>Video giới thiệu bản thân (3-5 phút, tiếng Anh)</li>
+        </ul>
+      </div>
+
+      <!-- Section: Quyền lợi -->
+      <div class="scholarship-section">
+        <h2>🎁 Quyền Lợi Đặc Biệt</h2>
+        <ul>
+          <li>Được tài trợ học phí toàn phần hoặc một phần</li>
+          <li>Nhận trợ cấp sinh hoạt phí hàng tháng</li>
+          <li>Tham gia các khóa đào tạo kỹ năng lãnh đạo và quản lý</li>
+          <li>Cơ hội thực tập có lương tại các tập đoàn kinh tế hàng đầu</li>
+          <li>Study tour đến các quốc gia phát triển (Singapore, Hàn Quốc, Nhật Bản)</li>
+          <li>Được mentoring bởi các chuyên gia kinh tế cao cấp</li>
+          <li>Hỗ trợ thi chứng chỉ quốc tế (CFA, FRM, ACCA)</li>
+          <li>Ưu tiên tuyển dụng sau khi tốt nghiệp</li>
+        </ul>
+      </div>
+
+      <!-- Section: Quy trình -->
+      <div class="scholarship-section">
+        <h2>📝 Quy Trình Tuyển Chọn</h2>
+        <ol style="line-height: 1.8; color: #555;">
+          <li><strong>Nộp hồ sơ:</strong> Điền form và upload hồ sơ trực tuyến trước 15/07/2026</li>
+          <li><strong>Vòng sơ loại hồ sơ:</strong> Ban tổ chức đánh giá học lực và thành tích (2 tuần)</li>
+          <li><strong>Vòng kiểm tra năng lực:</strong> Bài test về kiến thức kinh tế và tư duy logic</li>
+          <li><strong>Vòng phỏng vấn:</strong> Phỏng vấn cá nhân với hội đồng tuyển chọn (tiếng Anh)</li>
+          <li><strong>Vòng thuyết trình:</strong> Thuyết trình dự án hoặc giải pháp kinh tế (nhóm 3-4 người)</li>
+          <li><strong>Công bố kết quả:</strong> 01/09/2026</li>
+        </ol>
+      </div>
+
+      <!-- Section: Liên hệ -->
+      <div class="scholarship-section">
+        <h2>📞 Thông Tin Liên Hệ</h2>
+        <p><strong>Đơn vị tổ chức:</strong> Quỹ Phát Triển Kinh Tế Việt Nam</p>
+        <p><strong>Email:</strong> scholarship@economics.vn</p>
+        <p><strong>Điện thoại:</strong> 028 9876 5432</p>
+        <p><strong>Địa chỉ:</strong> 456 Đường DEF, Quận 1, TP. Hồ Chí Minh</p>
+        <p><strong>Website:</strong> www.economicsscholarship.vn</p>
+        <p><strong>Fanpage:</strong> facebook.com/economicsscholarship</p>
+      </div>
+
+      <!-- Apply Button -->
+      <div class="button-container">
+        <a href="/apply.html?scholarship=hoc-bong-kinh-te" class="apply-button">
+          📄 Đăng Ký Ngay
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 Scholar Share. All rights reserved.</p>
+      <p>Chia sẻ cơ hội - Kết nối tương lai</p>
+    </footer>
+  </div>
+</body>
+</html>

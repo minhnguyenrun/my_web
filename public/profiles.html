@@ -199,6 +199,123 @@
       color: #007bff;
       margin-top: 0;
     }
+
+    .intro-section {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .intro-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin: 0 0 20px 0;
+    }
+
+    .intro-section p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    .content-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .content-section h2 {
+      color: var(--primary-dark);
+      font-size: 28px;
+      border-bottom: 3px solid #11998e;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .content-section h3 {
+      color: #11998e;
+      font-size: 22px;
+      margin-top: 25px;
+    }
+
+    .content-section p {
+      line-height: 1.8;
+      color: #555;
+      font-size: 16px;
+      margin: 15px 0;
+    }
+
+    .content-section ul {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .content-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .content-section ol {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .content-section ol li {
+      margin-bottom: 15px;
+    }
+
+    .checklist {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-left: 4px solid #11998e;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+
+    .checklist h4 {
+      color: #11998e;
+      margin-top: 0;
+    }
+
+    .tip-box {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .tip-box strong {
+      color: #856404;
+    }
+
+    .warning-box {
+      background-color: #f8d7da;
+      border-left: 4px solid #dc3545;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .warning-box strong {
+      color: #721c24;
+    }
+
+    .success-box {
+      background-color: #d4edda;
+      border-left: 4px solid #28a745;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .success-box strong {
+      color: #155724;
+    }
   </style>
 </head>
 <body>
@@ -210,7 +327,6 @@
     <nav class="sidebar-nav">
       <a href="/index.html">Trang Chủ</a>
       <a href="/about.html">Về Chúng Tôi</a>
-      <a href="/admin.html">Quản Lý</a>
       <a href="/profiles.html" class="active">Hồ Sơ Học Bổng</a>
     </nav>
   </div>
@@ -229,34 +345,284 @@
     </header>
 
   <div class="container">
-    <div id="page-content">
-      <p>Đang tải...</p>
+    <!-- Intro Section -->
+    <div class="intro-section">
+      <h2>Hướng Dẫn Chuẩn Bị Hồ Sơ Học Bổng</h2>
+      <p>Hồ sơ học bổng xuất sắc là chìa khóa để bạn tiếp cận cơ hội học tập mơ ước.</p>
+      <p>Hãy cùng Scholar Share tìm hiểu cách chuẩn bị hồ sơ chuyên nghiệp và ấn tượng!</p>
+    </div>
+
+    <!-- General Guidelines -->
+    <div class="content-section">
+      <h2>📋 Nguyên Tắc Chung</h2>
+      <p>Khi chuẩn bị hồ sơ học bổng, bạn cần lưu ý những điểm sau:</p>
+      <ul>
+        <li><strong>Bắt đầu sớm:</strong> Chuẩn bị hồ sơ cần thời gian, đừng để đến phút chót</li>
+        <li><strong>Đọc kỹ yêu cầu:</strong> Mỗi học bổng có yêu cầu riêng, đảm bảo bạn nắm rõ tất cả</li>
+        <li><strong>Trung thực:</strong> Không bao giờ làm giả hay phóng đại thông tin</li>
+        <li><strong>Chính xác:</strong> Kiểm tra kỹ thông tin, không có lỗi chính tả hay ngữ pháp</li>
+        <li><strong>Hoàn chỉnh:</strong> Đảm bảo không thiếu bất kỳ giấy tờ nào trong danh sách yêu cầu</li>
+        <li><strong>Chuyên nghiệp:</strong> Trình bày gọn gàng, rõ ràng, dễ đọc</li>
+      </ul>
+    </div>
+
+    <!-- Basic Documents -->
+    <div class="content-section">
+      <h2>📄 Hồ Sơ Cơ Bản</h2>
+      <p>Hầu hết các học bổng đều yêu cầu những loại giấy tờ sau:</p>
+
+      <h3>1. Đơn Xin Học Bổng</h3>
+      <ul>
+        <li>Viết theo mẫu của tổ chức cung cấp học bổng (nếu có)</li>
+        <li>Trình bày rõ ràng lý do xin học bổng và kế hoạch học tập</li>
+        <li>Ký tên và ghi đầy đủ thông tin cá nhân</li>
+      </ul>
+
+      <h3>2. Sơ Yếu Lý Lịch (CV)</h3>
+      <ul>
+        <li>Thông tin cá nhân: Họ tên, ngày sinh, địa chỉ, liên lạc</li>
+        <li>Học vấn: Trường học, bằng cấp, điểm số</li>
+        <li>Kinh nghiệm: Thực tập, làm việc part-time, tình nguyện</li>
+        <li>Kỹ năng: Ngoại ngữ, tin học, kỹ năng mềm</li>
+        <li>Thành tích: Giải thưởng, chứng chỉ</li>
+        <li>Sở thích và hoạt động ngoại khóa</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>💡 Mẹo:</strong> CV nên ngắn gọn (1-2 trang), tập trung vào những điểm nổi bật và liên quan đến học bổng.
+      </div>
+
+      <h3>3. Bảng Điểm</h3>
+      <ul>
+        <li>Bản sao bảng điểm THPT hoặc đại học (tùy yêu cầu)</li>
+        <li>Công chứng nếu cần thiết</li>
+        <li>Dịch sang tiếng Anh nếu học bổng quốc tế</li>
+      </ul>
+
+      <h3>4. Bằng Cấp / Chứng Chỉ</h3>
+      <ul>
+        <li>Bằng tốt nghiệp (nếu đã có)</li>
+        <li>Chứng chỉ ngoại ngữ (IELTS, TOEFL, TOEIC)</li>
+        <li>Chứng chỉ tin học, kỹ năng khác</li>
+        <li>Giấy chứng nhận giải thưởng</li>
+      </ul>
+
+      <h3>5. Giấy Tờ Tùy Thân</h3>
+      <ul>
+        <li>Bản sao CMND/CCCD</li>
+        <li>Bản sao hộ khẩu (một số trường hợp)</li>
+        <li>Ảnh 3x4 hoặc 4x6 (theo yêu cầu)</li>
+      </ul>
+    </div>
+
+    <!-- Essay Section -->
+    <div class="content-section">
+      <h2>✍️ Bài Luận Cá Nhân (Personal Statement/Essay)</h2>
+      <p>Đây là phần quan trọng nhất để bạn thể hiện bản thân và thuyết phục hội đồng tuyển chọn.</p>
+
+      <h3>Cấu trúc bài luận:</h3>
+      <ol>
+        <li><strong>Mở bài:</strong> Giới thiệu bản thân và thu hút sự chú ý của người đọc</li>
+        <li><strong>Thân bài:</strong>
+          <ul>
+            <li>Nền tảng học vấn và thành tích</li>
+            <li>Động lực học tập và ước mơ nghề nghiệp</li>
+            <li>Lý do cần học bổng này</li>
+            <li>Kế hoạch sử dụng học bổng như thế nào</li>
+            <li>Đóng góp cho xã hội sau khi hoàn thành chương trình</li>
+          </ul>
+        </li>
+        <li><strong>Kết bài:</strong> Khẳng định lại mong muốn và cảm ơn</li>
+      </ol>
+
+      <div class="checklist">
+        <h4>✅ Checklist cho bài luận tốt:</h4>
+        <ul>
+          <li>☐ Độ dài phù hợp (theo yêu cầu, thường 500-1500 từ)</li>
+          <li>☐ Câu chuyện cá nhân chân thực và cảm động</li>
+          <li>☐ Thể hiện rõ động lực và đam mê</li>
+          <li>☐ Liên kết với mục tiêu học bổng</li>
+          <li>☐ Không có lỗi chính tả, ngữ pháp</li>
+          <li>☐ Được ít nhất 2-3 người đọc và góp ý</li>
+          <li>☐ Nội dung độc đáo, không sao chép</li>
+        </ul>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 Mẹo viết bài luận hay:</strong>
+        <ul>
+          <li>Kể câu chuyện cụ thể thay vì nói chung chung</li>
+          <li>Thể hiện bản thân độc đáo, không cố gắng trở thành người khác</li>
+          <li>Tập trung vào cách bạn đã vượt qua khó khăn</li>
+          <li>Cho người đọc thấy sự phát triển của bạn</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Recommendation Letters -->
+    <div class="content-section">
+      <h2>💌 Thư Giới Thiệu (Recommendation Letters)</h2>
+      <p>Thư giới thiệu từ giáo viên, giảng viên hoặc người quản lý giúp xác thực năng lực của bạn.</p>
+
+      <h3>Ai nên viết thư giới thiệu?</h3>
+      <ul>
+        <li>Giáo viên, giảng viên dạy bạn và hiểu rõ năng lực học tập</li>
+        <li>Người quản lý nơi bạn thực tập hoặc làm việc</li>
+        <li>Người hướng dẫn dự án, nghiên cứu khoa học</li>
+        <li>Người phụ trách hoạt động xã hội, tình nguyện</li>
+      </ul>
+
+      <h3>Thông tin cần có trong thư:</h3>
+      <ul>
+        <li>Mối quan hệ giữa người viết và bạn</li>
+        <li>Thời gian quen biết</li>
+        <li>Đánh giá về năng lực học tập, kỹ năng</li>
+        <li>Những thành tích, đóng góp nổi bật</li>
+        <li>Tính cách, thái độ làm việc</li>
+        <li>Khuyến nghị và lý do</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>💡 Cách xin thư giới thiệu:</strong>
+        <ul>
+          <li>Xin trước ít nhất 2-4 tuần</li>
+          <li>Giải thích rõ về học bổng và lý do chọn họ</li>
+          <li>Cung cấp CV, bài luận để họ tham khảo</li>
+          <li>Gửi email nhắc nhở lịch sự trước deadline</li>
+          <li>Cảm ơn chân thành sau khi nhận được thư</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Special Documents -->
+    <div class="content-section">
+      <h2>📎 Hồ Sơ Đặc Biệt</h2>
+      <p>Tùy vào từng học bổng, bạn có thể cần chuẩn bị thêm:</p>
+
+      <h3>1. Portfolio (Hồ sơ năng lực)</h3>
+      <ul>
+        <li>Dành cho học bổng nghệ thuật, thiết kế, kiến trúc</li>
+        <li>Bao gồm các tác phẩm đại diện cho kỹ năng của bạn</li>
+        <li>Được trình bày chuyên nghiệp</li>
+      </ul>
+
+      <h3>2. Research Proposal (Đề xuất nghiên cứu)</h3>
+      <ul>
+        <li>Dành cho học bổng sau đại học, nghiên cứu khoa học</li>
+        <li>Trình bày rõ ràng vấn đề nghiên cứu, phương pháp, kế hoạch</li>
+        <li>Có tham khảo tài liệu khoa học</li>
+      </ul>
+
+      <h3>3. Video Giới Thiệu</h3>
+      <ul>
+        <li>Một số học bổng yêu cầu video 2-5 phút</li>
+        <li>Nội dung: Giới thiệu bản thân, động lực, kế hoạch</li>
+        <li>Quay rõ ràng, âm thanh tốt, trang phục lịch sự</li>
+      </ul>
+
+      <h3>4. Giấy Xác Nhận Hoàn Cảnh</h3>
+      <ul>
+        <li>Dành cho học bổng ưu tiên hoàn cảnh khó khăn</li>
+        <li>Xác nhận từ UBND phường/xã</li>
+        <li>Giấy tờ chứng minh thu nhập gia đình</li>
+      </ul>
+    </div>
+
+    <!-- Timeline Section -->
+    <div class="content-section">
+      <h2>⏰ Lịch Trình Chuẩn Bị</h2>
+      <p>Để chuẩn bị hồ sơ hoàn chỉnh, bạn nên bắt đầu trước deadline ít nhất 2-3 tháng:</p>
+
+      <h3>3 tháng trước deadline:</h3>
+      <ul>
+        <li>Research các học bổng phù hợp</li>
+        <li>Đọc kỹ yêu cầu và chuẩn bị danh sách cần làm</li>
+        <li>Bắt đầu viết bài luận cá nhân</li>
+      </ul>
+
+      <h3>2 tháng trước deadline:</h3>
+      <ul>
+        <li>Xin thư giới thiệu</li>
+        <li>Hoàn thiện bài luận và cho người khác đọc góp ý</li>
+        <li>Chuẩn bị các giấy tờ cần công chứng, dịch thuật</li>
+      </ul>
+
+      <h3>1 tháng trước deadline:</h3>
+      <ul>
+        <li>Hoàn tất tất cả tài liệu</li>
+        <li>Kiểm tra lại toàn bộ hồ sơ</li>
+        <li>Chuẩn bị cho phỏng vấn (nếu có)</li>
+      </ul>
+
+      <h3>1 tuần trước deadline:</h3>
+      <ul>
+        <li>Nộp hồ sơ</li>
+        <li>Lưu backup tất cả tài liệu</li>
+        <li>Theo dõi email để nhận thông báo</li>
+      </ul>
+
+      <div class="warning-box">
+        <strong>⚠️ Lưu ý:</strong> Đừng bao giờ nộp hồ sơ vào phút chót! Hệ thống có thể gặp lỗi hoặc bạn có thể phát hiện thiếu sót.
+      </div>
+    </div>
+
+    <!-- Common Mistakes -->
+    <div class="content-section">
+      <h2>❌ Những Lỗi Thường Gặp Cần Tránh</h2>
+      <ul>
+        <li><strong>Không đọc kỹ yêu cầu:</strong> Thiếu giấy tờ hoặc không theo đúng format</li>
+        <li><strong>Bài luận chung chung:</strong> Không thể hiện được cá tính và động lực thực sự</li>
+        <li><strong>Lỗi chính tả, ngữ pháp:</strong> Cho thấy sự thiếu cẩn thận</li>
+        <li><strong>CV quá dài:</strong> Người đọc không có thời gian đọc CV 5-10 trang</li>
+        <li><strong>Ảnh không chuyên nghiệp:</strong> Ảnh selfie, ảnh đi chơi</li>
+        <li><strong>Không backup:</strong> Mất file vào phút chót</li>
+        <li><strong>Nộp muộn:</strong> Hết hạn là không được xem xét</li>
+        <li><strong>Thư giới thiệu chung chung:</strong> Xin người không hiểu rõ bạn viết</li>
+      </ul>
+    </div>
+
+    <!-- Tips for Success -->
+    <div class="content-section">
+      <h2>🌟 Bí Quyết Thành Công</h2>
+      
+      <div class="success-box">
+        <strong>✅ Làm cho hồ sơ của bạn nổi bật:</strong>
+        <ul>
+          <li><strong>Câu chuyện độc đáo:</strong> Chia sẻ trải nghiệm cá nhân chân thực</li>
+          <li><strong>Thành tích cụ thể:</strong> Dùng số liệu, ví dụ minh họa</li>
+          <li><strong>Đam mê rõ ràng:</strong> Cho người đọc thấy bạn yêu thích điều mình làm</li>
+          <li><strong>Tầm nhìn dài hạn:</strong> Có kế hoạch rõ ràng cho tương lai</li>
+          <li><strong>Trình bày chuyên nghiệp:</strong> Gọn gàng, dễ đọc, có cấu trúc</li>
+        </ul>
+      </div>
+
+      <h3>Mindset đúng đắn:</h3>
+      <ul>
+        <li>Không ngại thất bại - mỗi lần nộp hồ sơ là một lần học hỏi</li>
+        <li>Nộp nhiều học bổng - đừng chỉ đặt cược vào một</li>
+        <li>Tự tin nhưng khiêm tốn</li>
+        <li>Kiên trì và không bỏ cuộc</li>
+      </ul>
+
+      <h3>Nguồn hỗ trợ:</h3>
+      <ul>
+        <li>Văn phòng hỗ trợ sinh viên của trường</li>
+        <li>Cựu sinh viên nhận học bổng</li>
+        <li>Cộng đồng Scholar Share</li>
+        <li>Các group, forum về học bổng</li>
+      </ul>
+    </div>
+
+    <!-- Final Note -->
+    <div class="content-section">
+      <h2>💪 Lời Kết</h2>
+      <p>Chuẩn bị hồ sơ học bổng là một quá trình đầy thử thách nhưng cũng rất bổ ích. Nó không chỉ giúp bạn có cơ hội nhận học bổng mà còn giúp bạn hiểu rõ hơn về bản thân, mục tiêu và định hướng tương lai.</p>
+      <p>Hãy bắt đầu từ hôm nay, chuẩn bị kỹ lưỡng và tự tin theo đuổi ước mơ của mình!</p>
+      <p style="text-align: center; margin-top: 30px; font-size: 18px; color: #11998e;">
+        <strong>Chúc bạn thành công với hồ sơ học bổng! 🎓</strong>
+      </p>
     </div>
   </div>
-
-  <script>
-    // Load page content
-    fetch('/api/pages/profiles')
-      .then(r => r.json())
-      .then(page => {
-        let contentHtml = '';
-        if (page.sections && page.sections.length > 0) {
-          page.sections.forEach(section => {
-            if (section.type === 'image') {
-              contentHtml += `<img src="/api/page-images/${section.id}" alt="Image" style="max-width:100%; display:block; margin:20px auto;">`;
-            } else {
-              contentHtml += `${section.content || ''}`;
-            }
-          });
-        } else {
-          contentHtml = '<p>Chưa có nội dung</p>';
-        }
-        document.getElementById('page-content').innerHTML = contentHtml;
-      })
-      .catch(err => {
-        document.getElementById('page-content').innerHTML = '<p>Lỗi tải nội dung</p>';
-      });
-  </script>
 
   <footer>
     <div class="footer-content">

@@ -204,6 +204,96 @@
       color: #007bff;
       margin-top: 0;
     }
+
+    .intro-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .intro-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin: 0 0 20px 0;
+    }
+
+    .intro-section p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    .content-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .content-section h2 {
+      color: var(--primary-dark);
+      font-size: 28px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .content-section h3 {
+      color: #667eea;
+      font-size: 22px;
+      margin-top: 25px;
+    }
+
+    .content-section p {
+      line-height: 1.8;
+      color: #555;
+      font-size: 16px;
+      margin: 15px 0;
+    }
+
+    .content-section ul {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .content-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .value-card {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .value-card h3 {
+      font-size: 24px;
+      margin: 10px 0;
+      color: white;
+    }
+
+    .value-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+    }
   </style>
 </head>
 <body>
@@ -215,7 +305,6 @@
     <nav class="sidebar-nav">
       <a href="/index.html">Trang Chủ</a>
       <a href="/about.html" class="active">Về Chúng Tôi</a>
-      <a href="/admin.html">Quản Lý</a>
       <a href="/profiles.html">Hồ Sơ Học Bổng</a>
     </nav>
   </div>
@@ -234,35 +323,102 @@
     </header>
 
   <div class="container">
-    <div id="page-content">
-      <p>Đang tải...</p>
+    <!-- Intro Section -->
+    <div class="intro-section">
+      <h2>Chia Sẻ Cơ Hội - Kết Nối Tương Lai</h2>
+      <p>Scholar Share là nền tảng chia sẻ thông tin về các chương trình học bổng,</p>
+      <p>giúp sinh viên Việt Nam tiếp cận cơ hội học tập và phát triển bản thân.</p>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="content-section">
+      <h2>🎯 Sứ Mệnh Của Chúng Tôi</h2>
+      <p>Scholar Share được thành lập với sứ mệnh kết nối sinh viên Việt Nam với các cơ hội học bổng chất lượng. Chúng tôi tin rằng mỗi sinh viên đều xứng đáng có cơ hội phát triển tài năng của mình, bất kể hoàn cảnh kinh tế.</p>
+      <p>Thông qua nền tảng của mình, chúng tôi mong muốn:</p>
+      <ul>
+        <li><strong>Tăng khả năng tiếp cận:</strong> Đưa thông tin học bổng đến tay mọi sinh viên một cách dễ dàng và minh bạch</li>
+        <li><strong>Hỗ trợ toàn diện:</strong> Cung cấp hướng dẫn chi tiết về quy trình đăng ký và chuẩn bị hồ sơ</li>
+        <li><strong>Xây dựng cộng đồng:</strong> Kết nối các sinh viên nhận học bổng để chia sẻ kinh nghiệm và hỗ trợ lẫn nhau</li>
+        <li><strong>Khuyến khích phát triển:</strong> Truyền cảm hứng cho thế hệ trẻ theo đuổi ước mơ học tập</li>
+      </ul>
+    </div>
+
+    <!-- Vision Section -->
+    <div class="content-section">
+      <h2>🌟 Tầm Nhìn</h2>
+      <p>Chúng tôi hướng đến việc trở thành nền tảng học bổng hàng đầu tại Việt Nam, nơi:</p>
+      <ul>
+        <li>Tập hợp đầy đủ nhất các chương trình học bổng trong và ngoài nước</li>
+        <li>Cung cấp công cụ hỗ trợ thông minh giúp sinh viên tìm kiếm học bổng phù hợp</li>
+        <li>Xây dựng cộng đồng sinh viên năng động, hỗ trợ và truyền cảm hứng lẫn nhau</li>
+        <li>Hợp tác với các tổ chức giáo dục để tạo ra nhiều cơ hội học bổng hơn</li>
+      </ul>
+    </div>
+
+    <!-- Values Section -->
+    <div class="content-section">
+      <h2>💎 Giá Trị Cốt Lõi</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>🤝 Chia Sẻ</h3>
+          <p>Chia sẻ thông tin, kinh nghiệm và cơ hội để cùng nhau phát triển</p>
+        </div>
+        <div class="value-card">
+          <h3>🎓 Tri Thức</h3>
+          <p>Đề cao giá trị của giáo dục và học tập suốt đời</p>
+        </div>
+        <div class="value-card">
+          <h3>🌈 Công Bằng</h3>
+          <p>Tạo cơ hội bình đẳng cho mọi sinh viên bất kể xuất thân</p>
+        </div>
+        <div class="value-card">
+          <h3>💪 Nỗ Lực</h3>
+          <p>Khuyến khích tinh thần cố gắng và vượt qua thử thách</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What We Do Section -->
+    <div class="content-section">
+      <h2>📚 Chúng Tôi Làm Gì?</h2>
+      
+      <h3>1. Tổng Hợp Thông Tin Học Bổng</h3>
+      <p>Chúng tôi liên tục cập nhật thông tin về các chương trình học bổng từ nhiều nguồn khác nhau:</p>
+      <ul>
+        <li>Học bổng trong nước từ các trường đại học, doanh nghiệp và tổ chức</li>
+        <li>Học bổng quốc tế cho du học các nước</li>
+        <li>Học bổng theo ngành nghề: STEM, Kinh tế, Y khoa, Nghệ thuật, v.v.</li>
+        <li>Học bổng theo đối tượng: Sinh viên xuất sắc, hoàn cảnh khó khăn, thiểu số, v.v.</li>
+      </ul>
+
+      <h3>2. Hướng Dẫn Chi Tiết</h3>
+      <p>Mỗi chương trình học bổng đều được chúng tôi trình bày một cách chi tiết và dễ hiểu:</p>
+      <ul>
+        <li>Điều kiện ứng tuyển cụ thể</li>
+        <li>Quy trình đăng ký từng bước</li>
+        <li>Hồ sơ cần chuẩn bị</li>
+        <li>Mẹo và kinh nghiệm từ những người đã thành công</li>
+      </ul>
+
+      <h3>3. Cộng Đồng Hỗ Trợ</h3>
+      <p>Chúng tôi xây dựng một cộng đồng sinh viên năng động, nơi mọi người có thể:</p>
+      <ul>
+        <li>Trao đổi kinh nghiệm làm hồ sơ học bổng</li>
+        <li>Chia sẻ câu chuyện thành công</li>
+        <li>Hỗ trợ và động viên lẫn nhau</li>
+        <li>Kết nối với các mentor và alumni</li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="content-section">
+      <h2>📞 Liên Hệ Với Chúng Tôi</h2>
+      <p><strong>Email:</strong> contact@scholarshare.vn</p>
+      <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61582021168672" target="_blank">Scholar Share Vietnam</a></p>
+      <p><strong>Địa chỉ:</strong> Thành phố Hồ Chí Minh, Việt Nam</p>
+      <p style="margin-top: 20px;">Nếu bạn có bất kỳ câu hỏi nào về học bổng hoặc muốn đóng góp ý kiến, đừng ngần ngại liên hệ với chúng tôi!</p>
     </div>
   </div>
-
-  <script>
-    // Load page content
-    fetch('/api/pages/about')
-      .then(r => r.json())
-      .then(page => {
-        let contentHtml = '';
-        if (page.sections && page.sections.length > 0) {
-          page.sections.forEach(section => {
-            if (section.type === 'image') {
-              contentHtml += `<img src="/api/page-images/${section.id}" alt="Image" style="max-width:100%; display:block; margin:20px auto;">`;
-            } else {
-              contentHtml += `${section.content || ''}`;
-            }
-          });
-        } else {
-          contentHtml = '<p>Chưa có nội dung</p>';
-        }
-        document.getElementById('page-content').innerHTML = contentHtml;
-      })
-      .catch(err => {
-        document.getElementById('page-content').innerHTML = '<p>Lỗi tải nội dung</p>';
-      });
-
-  </script>
 
   <footer>
     <div class="footer-content">
